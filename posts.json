@@ -1,0 +1,33 @@
+[
+  {
+    "title": "Hello, World",
+    "date": "2025-01-03",
+    "excerpt": "First post on the new site. Why I built this, and what to expect.",
+    "tags": [
+      "meta",
+      "hello"
+    ],
+    "url": "#"
+  },
+  {
+    "title": "Kyoto in Late Autumn",
+    "date": "2024-11-18",
+    "excerpt": "A quiet walk through temple gardens and streets after the rain.",
+    "tags": [
+      "travel",
+      "japan"
+    ],
+    "url": "#"
+  },
+  {
+    "title": "On Carrying Less",
+    "date": "2024-07-01",
+    "excerpt": "Notes on minimal packing and why I ditched the third lens.",
+    "tags": [
+      "gear",
+      "travel",
+      "thoughts"
+    ],
+    "url": "#"
+  }
+]

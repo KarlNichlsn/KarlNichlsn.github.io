@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Senior Something",
+    "org": "Company A",
+    "start": "2023",
+    "end": "",
+    "desc": "Leading X, building Y, mentoring Z."
+  },
+  {
+    "title": "Engineer",
+    "org": "Company B",
+    "start": "2020",
+    "end": "2023",
+    "desc": "Worked on projects and systems with an eye for simplicity."
+  },
+  {
+    "title": "Student",
+    "org": "University C",
+    "start": "2016",
+    "end": "2020",
+    "desc": "Studied interesting things and built side projects."
+  }
+]
