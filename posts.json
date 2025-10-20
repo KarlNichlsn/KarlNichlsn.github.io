@@ -2,32 +2,44 @@
   {
     "title": "Hello, World",
     "date": "2025-01-03",
-    "excerpt": "First post on the new site. Why I built this, and what to expect.",
+    "excerpt": "Just to fill the site up.",
     "tags": [
       "meta",
       "hello"
     ],
-    "url": "#"
+    "url": "posts/hello-world.html"
   },
   {
-    "title": "Kyoto in Late Autumn",
+    "title": "The Sunset on Koh Tao",
     "date": "2024-11-18",
-    "excerpt": "A quiet walk through temple gardens and streets after the rain.",
+    "excerpt": "The sun sets on Koh Tao every day. I can't believe I never knew.",
     "tags": [
       "travel",
-      "japan"
+      "thailand"
     ],
-    "url": "#"
+    "url": "posts/koh_tao.html"
   },
   {
-    "title": "On Carrying Less",
-    "date": "2024-07-01",
-    "excerpt": "Notes on minimal packing and why I ditched the third lens.",
+    "title": "Hoi-An food",
+    "date": "2024-04-14",
+    "excerpt": "go to chopsticks! CAO LAO!",
     "tags": [
-      "gear",
       "travel",
+      "vietnam",
+      "food"
+    ],
+    "url": "posts/kohnew.html"
+  },
+  {
+    "title": "On being Irish",
+    "date": "2024-07-01",
+    "excerpt": "The internal struggle of being a bit of a west brit.",
+    "tags": [
+      "crisis",
+      "gaeilge",
       "thoughts"
     ],
-    "url": "#"
+    "url": "posts/try_not_to_sasanach.html"
   }
+  
 ]

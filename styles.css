@@ -12,7 +12,7 @@
 html[data-theme="dark"] {
   --bg: #0f1115;
   --paper: #0c0e13;
-  --ink: #eaeaea;
+  --ink: #eaeaea; /* high-contrast text color */
   --muted: #a0a4ad;
   --accent: #cfcfcf;
   --line: #1c2230;
@@ -30,6 +30,7 @@ body {
   letter-spacing: 0.2px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background .35s ease, color .35s ease, border-color .35s ease;
 }
 
 h1, h2, h3 { font-weight: 600; letter-spacing: 0.4px; }
@@ -81,7 +82,12 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
   display: grid; place-items: center;
   cursor: pointer;
   box-shadow: var(--shadow);
+  color: var(--ink); /* match contrast text so sun/moon always visible */
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
 }
+/* Spin animation when toggled */
+@keyframes spinOnce { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.icon-btn.spin-once svg { animation: spinOnce .5s ease; }
 
 .hamburger {
   --bar: 20px;
@@ -129,10 +135,7 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0); }
-.btn-outline {
-  background: transparent;
-  border-style: dashed;
-}
+.btn-outline { background: transparent; border-style: dashed; }
 
 .input {
   background: var(--paper);
@@ -145,15 +148,14 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.75rem 0 1.25rem; }
 
+/* Timeline: full height in page (no inner scrolling) */
 .timeline-wrapper {
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--paper);
   box-shadow: var(--shadow);
-  max-height: 360px; overflow: auto;
   padding: 1rem;
 }
-
 .timeline {
   list-style: none; margin: 0; padding: 0;
   border-left: 2px dashed var(--line);

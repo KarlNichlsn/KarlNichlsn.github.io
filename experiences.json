@@ -1,17 +1,94 @@
 [
   {
-    "title": "Senior Something",
-    "org": "Company A",
-    "start": "2023",
+    "title": "MPhil Data Intensive Science",
+    "org": "University of Cambridge",
+    "start": "2025",
     "end": "",
-    "desc": "Leading X, building Y, mentoring Z."
+    "desc": "Learning cutting edge ML techniques for science!"
   },
   {
-    "title": "Engineer",
-    "org": "Company B",
+    "title": "Consultant",
+    "org": "Startup 1",
+    "start": "2025",
+    "end": "2025",
+    "desc": "Memory AI app"
+  },
+  {
+    "title": "Physics Expert",
+    "org": "Startup 2",
+    "start": "2025",
+    "end": "2025",
+    "desc": "Helping AIs to learn to solve physics questions"
+  },
+  {
+    "title": "REDACTED",
+    "org": "Multinational 1",
+    "start": "2024",
+    "end": "2025",
+    "desc": "Explored ideas at the intersection of X and Y."
+  },
+  {
+    "title": "Pathplanning Team Lead",
+    "org": "Formula Trinity",
+    "start": "2018",
+    "end": "2018",
+    "desc": "XYZ to fill out."
+  },
+  {
+    "title": "Control Team Member",
+    "org": "Formula Trinity",
+    "start": "2017",
+    "end": "2019",
+    "desc": "autonomous driving car algorithm!."
+  },
+  {
+    "title": "Student Researcher",
+    "org": "Harvard-Smithsonian Center for Astrophysics",
+    "start": "2023",
+    "end": "2024",
+    "desc": "Research on NGC891."
+  },
+  {
+    "title": "Control Team Member",
+    "org": "Formula Trinity",
+    "start": "2017",
+    "end": "2019",
+    "desc": "autonomous driving car!."
+  },
+  {
+    "title": "BA Mod. (Hons) Physics & Astrophysics",
+    "org": "Trinity College Dublin",
     "start": "2020",
-    "end": "2023",
-    "desc": "Worked on projects and systems with an eye for simplicity."
+    "end": "2024",
+    "desc": "UG degree"
+  },
+  {
+    "title": "Early University Entrance",
+    "org": "Centre for Talented Youth Ireland",
+    "start": "2013",
+    "end": "2013",
+    "desc": "Electrical and matericals engineering. XYZ update dates and fill out."
+  },
+  {
+    "title": "Theoretical Physics",
+    "org": "Centre for Talented Youth Ireland",
+    "start": "2013",
+    "end": "2013",
+    "desc": "XYZ update dates and fill out - summer prog."
+  },
+  {
+    "title": "Sports Science",
+    "org": "Centre for Talented Youth Ireland",
+    "start": "2013",
+    "end": "2013",
+    "desc": "XYZ update dates and fill out - summer prog."
+  },
+  {
+    "title": "",
+    "org": "Entrepreneurs First",
+    "start": "2012",
+    "end": "2012",
+    "desc": "XYZ update dates and fill out."
   },
   {
     "title": "Student",

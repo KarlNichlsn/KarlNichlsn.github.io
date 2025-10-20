@@ -7,9 +7,11 @@
   <meta name="description" content="Personal site: About, Travel & Thoughts, Contact." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Typewriter-esque aesthetic -->
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <!-- Favicon (replace assets/favicon.png later if desired) -->
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
 <body>
   <header class="site-header">
@@ -20,9 +22,7 @@
       <a href="#contact" class="nav-link">Contact</a>
     </nav>
     <div class="header-actions">
-      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
-        <!-- icon injected by JS -->
-      </button>
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme"></button>
       <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
       </button>
@@ -35,8 +35,8 @@
       <div class="container">
         <h1>About</h1>
         <p class="intro">
-          Welcome! This is my little corner of the web. I like clean typography, quiet aesthetics,
-          and writing things down. Have a look around.
+          Welcome! My name is Karl and I studied Physics & Astrophysics @ Trinity College Dublin. Have a look around my site to see some
+          of the things I've done. This is a WORK IN PROGRESS
         </p>
         <div class="cta-row">
           <a class="btn" href="assets/CV.pdf" target="_blank" rel="noopener">CV</a>
@@ -45,7 +45,7 @@
         </div>
 
         <h2 class="mt">Experience</h2>
-        <p class="muted">A scrollable timeline. Edit <code>experiences.json</code> to customize.</p>
+        <p class="muted">A chronological timeline. MAY CHANGE to central or allow overlaps</p>
         <div class="timeline-wrapper">
           <ol id="timeline" class="timeline" aria-live="polite"></ol>
         </div>
@@ -78,7 +78,7 @@
         </div>
 
         <div id="posts" class="posts" aria-live="polite"></div>
-        <p class="muted">Edit <code>posts.json</code> to add or change blog entries.</p>
+        <p class="muted">some musings</p>
       </div>
     </section>
 
@@ -97,7 +97,7 @@
 
   <footer class="site-footer">
     <div class="container tiny">
-      <span>&copy; <span id="year"></span> · Made with a typewriter-ish theme.</span>
+      <span>&copy; <span id="year"></span> · Made with love.</span>
       <a href="#about" class="tiny-link">Back to top ↑</a>
     </div>
   </footer>

@@ -2,20 +2,10 @@
 const $ = (sel, root=document) => root.querySelector(sel);
 const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-// Theme toggle with sun/moon
+// Theme toggle with sun/moon + spin animation
 const themeToggle = $("#themeToggle");
 const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 const savedTheme = localStorage.getItem("theme");
-const applyTheme = (t) => {
-  document.documentElement.setAttribute("data-theme", t);
-  localStorage.setItem("theme", t);
-  // icon
-  themeToggle.innerHTML = t === "dark" ? sunIcon : moonIcon;
-  themeToggle.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
-};
-const initTheme = () => applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
-const toggleTheme = () => applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
-
 const sunIcon = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
   <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
   <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5" />
@@ -23,6 +13,16 @@ const sunIcon = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" ari
 const moonIcon = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" fill="none"/>
 </svg>`;
+
+const applyTheme = (t) => {
+  document.documentElement.setAttribute("data-theme", t);
+  localStorage.setItem("theme", t);
+  // icon + accessible label
+  themeToggle.innerHTML = t === "dark" ? sunIcon : moonIcon;
+  themeToggle.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
+};
+const initTheme = () => applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
+const toggleTheme = () => applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
 
 // Hamburger
 const hamburger = $("#hamburger");
@@ -35,13 +35,19 @@ hamburger.addEventListener("click", () => {
 
 // Init
 initTheme();
-themeToggle.addEventListener("click", toggleTheme);
+themeToggle.addEventListener("click", () => {
+  // restart spin animation each click
+  themeToggle.classList.remove("spin-once");
+  void themeToggle.offsetWidth; // reflow
+  themeToggle.classList.add("spin-once");
+  toggleTheme();
+});
 $("#year").textContent = new Date().getFullYear();
 
 // Link placeholders (update these once you know your URLs)
 const LINKS = {
-  linkedin: "https://www.linkedin.com/",
-  github: "https://github.com/",
+  linkedin: "https://www.linkedin.com/in/karl-nicholson/",
+  github: "https://github.com/KarlNichlsn",
   email: "mailto:you@example.com"
 };
 $("#linkedinAbout").href = LINKS.linkedin;

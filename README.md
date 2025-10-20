@@ -1,33 +1,13 @@
-# Personal Site (Typewriter Aesthetic)
+# Personal Site (Typewriter Aesthetic) — Updated
 
-## Features
-- Off‑white “typewriter” theme with dark/night mode (sun/moon toggle).
-- Sticky header with hamburger menu on mobile.
-- Sections: **About**, **Travel & Thoughts**, **Contact**.
-- **About**: CV / LinkedIn / GitHub buttons, plus a scrollable, chronological experience timeline (edit `experiences.json`).
-- **Travel & Thoughts**: Mercator world map that you can click to add pins linked to posts (stored in your browser). Blog cards loaded from `posts.json`, sortable, searchable, and filterable by tags.
-- **Contact**: Buttons for LinkedIn and Email.
-- No build step. Pure HTML/CSS/JS.
+Changes:
+- Theme toggle now uses high-contrast icon color in dark mode and spins on click.
+- Timeline is full-height on the page (no inner scroll box).
+- Added more placeholder experience entries.
+- Added favicon placeholders (`assets/favicon.png`, `assets/apple-touch-icon.png`) showing “KN”. Replace with your own to customize.
+- Blog post links now point to working sample pages in `posts/`.
 
-## Quick Start (GitHub Pages)
-3. Replace placeholder content:
-   - Put your **CV** PDF at `assets/CV.pdf` (or change the link in `index.html`).
-   - Swap `assets/world-map-mercator.jpg` with your own map image (any Mercator projection image).
-   - Update the social links in `script.js` (`LINKS` object) and the email in the contact section.
-   - Edit `experiences.json` and `posts.json` to your content.
-4. Commit & push everything to the repo root.
-5. In your repo settings, enable **Pages** (if not using the `yourname.github.io` naming).
-6. Your site will be live at `https://yourname.github.io/` (or the Pages URL).
+## Where to upload/replace the favicon
+- Replace **`assets/favicon.png`** (32×32 PNG) and **`assets/apple-touch-icon.png`** (180×180 PNG).
+- You can also add `favicon.ico` if you prefer; add `<link rel="icon" href="favicon.ico">` to `index.html`.
 
-## Editing Content
-- **Timeline:** Update `experiences.json` entries. Fields: `title`, `org`, `start`, `end`, `desc`.
-- **Posts:** Update `posts.json` entries. Fields: `title`, `date` (YYYY-MM-DD), `excerpt`, `tags`, `url`.
-- **Map Pins:** Click on the map to add a label and optional URL. Pins persist in **localStorage** (per browser). To share pins with others, hardcode them in JS or pre-render them from a file.
-
-## Customize
-- Tweak fonts and colors in `styles.css` (CSS variables at the top).
-- Adjust copy and structure in `index.html`.
-- Add a favicon by dropping `favicon.ico` in the root and adding it to the `<head>`.
-
-## License
-Do whatever you want with it. Have fun!
