@@ -1,40 +1,107 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Karl Nicholson Homepage</title>
-	</head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Personal Site</title>
+  <meta name="description" content="Personal site: About, Travel & Thoughts, Contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Typewriter-esque aesthetic -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="#" class="brand" aria-label="Home">~ My Site</a>
+    <nav class="nav" id="nav">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#travel" class="nav-link">Travel &amp; Thoughts</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+        <!-- icon injected by JS -->
+      </button>
+      <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
+  <main>
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="container">
+        <h1>About</h1>
+        <p class="intro">
+          Welcome! This is my little corner of the web. I like clean typography, quiet aesthetics,
+          and writing things down. Have a look around.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="assets/CV.pdf" target="_blank" rel="noopener">CV</a>
+          <a class="btn" id="linkedinAbout" href="#" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" id="githubAbout" href="#" target="_blank" rel="noopener">GitHub</a>
+        </div>
 
+        <h2 class="mt">Experience</h2>
+        <p class="muted">A scrollable timeline. Edit <code>experiences.json</code> to customize.</p>
+        <div class="timeline-wrapper">
+          <ol id="timeline" class="timeline" aria-live="polite"></ol>
+        </div>
+      </div>
+    </section>
 
-	<body>
-		<h1> Homepage </h1>
-		<hr>
-		<h2> Introduction </h2>
-		Hello World from <b> Karl </b> <br>
-		I am an astrophysics graduate from Trinity College Dublin.
-		<h3> Background </h3>
-		</p>Placeholder <br> 
-LOREM IPSUM ETC ETC ETC 
-	AUT INVENIAM VIAM AUT FACIAM</p>
-		
-<hr>
-		<h3> Links:</h3>
-		<ul>
-			<li> <a href="https://www.linkedin.com/in/karl-nicholson/" target="_blank"> Linkedin </a> </li>
-			<li> <a href="https://www.google.com" target="_blank"> Instagram </a> </li>	
-			<li> <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"> OF </a> </li>
-			<li> <a href="https://www.google.com" target="_blank"> Twitter </a> </li>
+    <!-- Travel & Thoughts -->
+    <section id="travel" class="section">
+      <div class="container">
+        <h1>Travel &amp; Thoughts</h1>
+        <div class="map-and-legend">
+          <div class="map-wrap">
+            <img id="worldMap" src="assets/world-map-mercator.jpg" alt="World map (Mercator projection)" />
+            <div id="pins" class="pins" aria-live="polite"></div>
+          </div>
+          <div class="map-legend">
+            <h3>Pin a Post</h3>
+            <p class="muted">Click anywhere on the map to add a pin linked to an existing post. Pins are stored in your browser (localStorage).</p>
+            <button class="btn btn-outline" id="clearPins">Clear Pins</button>
+          </div>
+        </div>
 
-		</ul>
+        <div class="blog-toolbar">
+          <input id="searchInput" class="input" type="search" placeholder="Search posts..." aria-label="Search posts" />
+          <div id="tagChips" class="chips"></div>
+          <select id="sortSelect" class="input" aria-label="Sort posts">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+          </select>
+        </div>
 
-	</body>
+        <div id="posts" class="posts" aria-live="polite"></div>
+        <p class="muted">Edit <code>posts.json</code> to add or change blog entries.</p>
+      </div>
+    </section>
 
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h1>Contact</h1>
+        <p>Say hi — I’m friendly.</p>
+        <div class="cta-row">
+          <a class="btn" id="linkedinContact" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+          <a class="btn" id="emailContact" href="mailto:you@example.com" aria-label="Email me">Email</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
+  <footer class="site-footer">
+    <div class="container tiny">
+      <span>&copy; <span id="year"></span> · Made with a typewriter-ish theme.</span>
+      <a href="#about" class="tiny-link">Back to top ↑</a>
+    </div>
+  </footer>
 
-
-
-
-
+  <script src="script.js"></script>
+</body>
 </html>
