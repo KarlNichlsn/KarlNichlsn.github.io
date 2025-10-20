@@ -1,7 +1,5 @@
 # Personal Site (Typewriter Aesthetic)
 
-A minimal, typewriter-inspired personal website ready for GitHub Pages.
-
 ## Features
 - Off‑white “typewriter” theme with dark/night mode (sun/moon toggle).
 - Sticky header with hamburger menu on mobile.
@@ -12,8 +10,6 @@ A minimal, typewriter-inspired personal website ready for GitHub Pages.
 - No build step. Pure HTML/CSS/JS.
 
 ## Quick Start (GitHub Pages)
-1. Create a new repo on GitHub (e.g., `yourname.github.io`).
-2. Download the ZIP from this assistant and extract it.
 3. Replace placeholder content:
    - Put your **CV** PDF at `assets/CV.pdf` (or change the link in `index.html`).
    - Swap `assets/world-map-mercator.jpg` with your own map image (any Mercator projection image).
