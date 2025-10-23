@@ -30,7 +30,7 @@ body {
   letter-spacing: 0.2px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background .35s ease, color .35s ease, border-color .35s ease;
+  transition: background .4s ease, color .4s ease, border-color .35s ease;
 }
 
 h1, h2, h3 { font-weight: 600; letter-spacing: 0.4px; }
@@ -58,6 +58,16 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
   padding: 0.6rem 1rem;
 }
 
+/* hide/show header on scroll (transition via transform) */
+.site-header.hide {
+  transform: translateY(calc(-100% - 6px));
+  transition: transform .25s ease-in;
+}
+.site-header.show {
+  transform: translateY(0);
+  transition: transform .2s ease-out;
+}
+
 .brand {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   letter-spacing: 1px;
@@ -67,6 +77,11 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
   padding: 0.35rem 0.6rem; border-radius: 8px;
   box-shadow: var(--shadow);
 }
+
+.favicon-btn {
+  background: transparent; border: none; padding: 0; margin-left: 0.5rem; display: inline-grid; place-items: center;
+}
+.favicon-btn img { width: 30px; height: 30px; display: block; }
 
 .nav { display: flex; gap: 1rem; align-items: center; }
 .nav-link { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
@@ -87,7 +102,10 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 }
 /* Spin animation when toggled */
 @keyframes spinOnce { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.icon-btn.spin-once svg { animation: spinOnce .5s ease; }
+.icon-btn.spin-once svg { animation: spinOnce .55s cubic-bezier(.2,.9,.3,1); transform-origin: 50% 50%; }
+
+/* Ensure inline SVGs use currentColor so they inherit high-contrast colors */
+.icon-btn svg { color: inherit; fill: none; stroke: currentColor; }
 
 .hamburger {
   --bar: 20px;
@@ -101,14 +119,8 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
   cursor: pointer;
   box-shadow: var(--shadow);
 }
-.hamburger span {
-  display: block; height: 2px; width: var(--bar);
-  background: var(--ink);
-  transition: transform .25s ease, opacity .25s ease;
-}
-.hamburger[aria-expanded="true"] span:nth-child(1){ transform: translateY(5px) rotate(45deg); }
-.hamburger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
-.hamburger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-5px) rotate(-45deg); }
+.hamburger img { width: 22px; height: 22px; }
+.hamburger[aria-expanded="true"] { border-radius: 8px; }
 
 @media (max-width: 800px) {
   .hamburger { display: flex; }
@@ -157,22 +169,78 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
   padding: 1rem;
 }
 .timeline {
-  list-style: none; margin: 0; padding: 0;
-  border-left: 2px dashed var(--line);
+  position: relative; list-style: none; margin: 0; padding: 0;
+  height: 100%;
 }
-.timeline li {
-  margin: 0; padding: 0 0 1.2rem 1rem; position: relative;
+.timeline::before {
+  content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+  width: 2px; height: 100%; background: linear-gradient(to bottom, var(--line), var(--line));
 }
-.timeline li::before {
-  content: "";
-  position: absolute; left: -7px; top: 2px;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--bg);
-  border: 2px solid var(--ink);
+.timeline li { position: absolute; width: 50%; box-sizing: border-box; }
+.timeline li.left { left: 0; text-align: right; }
+.timeline li.right { left: 50%; }
+.timeline li .card { display: inline-block; width: 420px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 0.7rem 0.9rem; box-shadow: var(--shadow); vertical-align: top; }
+/* remove per-card circular markers */
+.timeline li::after { display: none; }
+
+/* Card hover + clickable cursor */
+.timeline li .card { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; cursor: pointer; }
+.timeline li .card:hover, .timeline li .card:focus { transform: translateY(-6px) scale(1.01); box-shadow: 0 6px 36px rgba(0,0,0,0.12); border-color: color-mix(in oklab, var(--ink) 12%, transparent); }
+
+/* keep cards away from the central line */
+.timeline li.left .card { margin-right: 36px; }
+.timeline li.right .card { margin-left: 36px; }
+
+
+/* Education cards: keep same width but allow fuller content (lists, paragraphs) */
+.timeline li.left .card.edu { width: 420px; background: color-mix(in oklab, var(--paper) 94%, #f0f0f0); border: 1px solid color-mix(in oklab, var(--line) 70%, transparent); padding: 0.9rem 1rem; }
+.timeline li.left .card.edu .desc { margin-top: 0.6rem; color: var(--muted); font-size: 0.95rem; }
+.timeline li.left .card.edu .desc ul { margin: 0.25rem 0 0 1rem; }
+.timeline li.left .card.edu .desc li { margin: 0.3rem 0; }
+
+/* Right side: uniform card sizes (height controlled via JS) */
+.timeline li.right .card { width: 420px; }
+
+/* Year labels centered on the timeline */
+.timeline-year { left: 50%; transform: translateX(-50%); position: absolute; z-index: 6; }
+.timeline-year .year-label { background: var(--paper); padding: .2rem .6rem; border-radius: 8px; border:1px solid var(--line); font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.9rem; }
+
+/* Travel overlay: under construction image full cover */
+.travel-overlay { position: absolute; inset: 0; background-image: url('assets/under_construction_sign.jpg'); background-size: cover; background-position: center; opacity: 0.12; pointer-events: none; z-index: 3; }
+.map-wrap { position: relative; }
+.map-wrap .travel-overlay { position: absolute; inset: 0; }
+
+/* Continuity bookend for year marker: we'll place a circular marker overlay */
+.timeline-container { position: relative; }
+.timeline-year { position: absolute; left: 50%; transform: translateX(-50%); top: 0; display: flex; gap: 8px; align-items: center; z-index: 5; }
+/* Removed circular bookend markers: keep year label only */
+.timeline-year .year-label { background: var(--paper); border: 1px solid var(--line); padding: 0.15rem .45rem; border-radius: 8px; font-family: "IBM Plex Mono", ui-monospace, monospace; color: var(--muted); font-weight: 600; }
+.timeline-year::before { content: ""; position: absolute; left: 50%; transform: translateX(-50%); width: 220px; height: 12px; top: 50%; background: var(--paper); border-radius: 8px; border: 1px solid var(--line); transform: translate(-50%, -50%); z-index: -1; }
+
+@media (max-width: 900px) {
+  .timeline li .card { width: calc(100% - 56px); margin: 0; }
+  .timeline li.left, .timeline li.right { left: 0; width: 100%; }
+  .timeline li.left .card, .timeline li.right .card { margin-left: 8px; margin-right: 8px; }
+  .timeline-year { left: 40px; transform: none; }
 }
-.timeline .when { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.85rem; color: var(--muted); }
+.timeline .when { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.25rem; }
 .timeline .what { font-weight: 600; }
 .timeline .where { color: var(--muted); }
+
+/* allow overlap by absolute positioning - spacing will be computed via JS */
+
+
+@media (max-width: 900px) {
+  .timeline li, .timeline::before { left: 0; transform: none; width: 100%; }
+  .timeline::before { left: 8px; }
+  .timeline li { padding-left: 2rem; margin-bottom: 1rem; transform: none; }
+  .timeline li .card { width: calc(100% - 32px); }
+}
+
+/* Highlights section */
+.highlights { display: flex; gap: 0.6rem; flex-wrap: wrap; margin: 0.8rem 0 1rem; }
+.highlight { background: var(--paper); border: 1px solid var(--line); padding: 0.55rem 0.9rem; border-radius: 10px; cursor: pointer; box-shadow: var(--shadow); }
+.highlight a { text-decoration: none; color: var(--ink); }
 
 .map-and-legend { display: grid; grid-template-columns: 1fr min(280px, 40%); gap: 1rem; align-items: start; }
 @media (max-width: 900px){ .map-and-legend { grid-template-columns: 1fr; } }
@@ -189,12 +257,12 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 .pin {
   position: absolute;
   transform: translate(-50%, -100%);
-  padding: 4px 6px;
-  border-radius: 8px;
+  min-width: 36px; min-height: 36px; padding: 8px 10px;
+  border-radius: 999px; /* circular */
   border: 1px solid var(--line);
   background: var(--bg);
   font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 13px; font-weight: 700; text-align: center; line-height: 1;
   cursor: pointer;
   box-shadow: var(--shadow);
 }
@@ -207,12 +275,39 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 .chip { border: 1px dashed var(--line); padding: 0.25rem 0.5rem; border-radius: 999px; cursor: pointer; background: var(--paper); }
 .chip.active { border-style: solid; }
 
+/* Ensure tags and chips have high contrast in both themes */
+.tag, .chip { background: color-mix(in oklab, var(--paper) 88%, transparent); color: var(--ink); border-color: var(--line); }
+.tag { padding: 0.15rem 0.45rem; font-weight: 600; }
+
+/* Under construction banner for blog section */
+.under-construction {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: linear-gradient(90deg,#ffea00,#f6c000); /* subtle yellow */
+  color: #0b0b0b; padding: .45rem .75rem; border-radius: 8px; border: 2px solid #0b0b0b;
+  box-shadow: 0 4px 12px rgba(11,11,11,0.12); font-weight: 700; font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* Full-bleed wide banner that sits above the travel section but doesn't block interactions below */
+.fullwide-uc { width: 100%; background: linear-gradient(90deg,#ffea00,#f6c000); border-bottom: 2px solid #0b0b0b; }
+.fullwide-uc .container { padding: 0.6rem 1.2rem; display: flex; justify-content: center; }
+.fullwide-uc { position: relative; z-index: 0; pointer-events: none; }
+.fullwide-uc .under-construction { border-radius: 6px; padding: .75rem 1.25rem; font-size: clamp(1.6rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: 1px; pointer-events: none; }
+
+/* Theme fade overlay to coordinate color/brightness change with spin */
+.theme-fade {
+  transition: background-color .45s ease, color .45s ease;
+}
+
 .posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.8rem; }
 .post {
   border: 1px solid var(--line); border-radius: 14px; padding: 0.9rem; background: var(--paper);
   box-shadow: var(--shadow);
   display: flex; flex-direction: column; gap: 0.4rem;
+  position: relative; z-index: 1; /* ensure posts are above other overlays */
 }
+
+/* Ensure buttons/links in posts are clickable above nearby overlays */
+.post .btn, .post a { position: relative; z-index: 5; }
 .post .meta { font-family: "IBM Plex Mono", ui-monospace, monospace; color: var(--muted); font-size: 0.85rem; }
 .post .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .post .tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.1rem 0.4rem; }

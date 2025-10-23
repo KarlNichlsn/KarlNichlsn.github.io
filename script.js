@@ -6,41 +6,49 @@ const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 const themeToggle = $("#themeToggle");
 const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 const savedTheme = localStorage.getItem("theme");
-const sunIcon = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-  <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5" />
+// SVG icons use currentColor so they inherit the button color.
+const sunIcon = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none">
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </g>
+  <circle cx="12" cy="12" r="4" fill="currentColor" opacity="0.95" />
 </svg>`;
-const moonIcon = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+const moonIcon = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" fill="none"/>
 </svg>`;
 
 const applyTheme = (t) => {
   document.documentElement.setAttribute("data-theme", t);
   localStorage.setItem("theme", t);
-  // icon + accessible label
+  // icon + accessible label: when in dark mode, show sun (as action to switch to light), and vice versa.
   themeToggle.innerHTML = t === "dark" ? sunIcon : moonIcon;
   themeToggle.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
+  // ensure the icon color matches contrast text by forcing color to --ink
+  themeToggle.style.color = getComputedStyle(document.documentElement).getPropertyValue('--ink') || '';
 };
 const initTheme = () => applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
 const toggleTheme = () => applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
 
-// Hamburger
+// Hamburger & favicon-home
 const hamburger = $("#hamburger");
 const nav = $("#nav");
+const homeBtn = $("#homeBtn");
 hamburger.addEventListener("click", () => {
   const expanded = hamburger.getAttribute("aria-expanded") === "true";
   hamburger.setAttribute("aria-expanded", String(!expanded));
   nav.classList.toggle("open");
 });
+homeBtn && homeBtn.addEventListener("click", () => { window.scrollTo({top:0, behavior: 'smooth'}); });
 
 // Init
 initTheme();
 themeToggle.addEventListener("click", () => {
-  // restart spin animation each click
+  // restart spin animation each click and then toggle theme
   themeToggle.classList.remove("spin-once");
   void themeToggle.offsetWidth; // reflow
   themeToggle.classList.add("spin-once");
-  toggleTheme();
+  // small timeout so the spin is noticeable before the theme switches
+  setTimeout(() => { toggleTheme(); }, 120);
 });
 $("#year").textContent = new Date().getFullYear();
 
@@ -62,14 +70,116 @@ async function loadExperiences() {
     const items = await res.json();
     const list = $("#timeline");
     list.innerHTML = "";
-    items.sort((a, b) => new Date(b.start || "1900-01-01") - new Date(a.start || "1900-01-01"));
-    items.forEach(x => {
-      const li = document.createElement("li");
-      const when = x.end ? `${x.start} — ${x.end}` : `${x.start} — present`;
-      li.innerHTML = `<div class="when">${when}</div>
-        <div class="what">${x.title}</div>
-        <div class="where">${x.org}</div>
-        <p>${x.desc || ""}</p>`;
+    // sort newest first (we will map positions from timelineEnd -> timelineStart)
+    items.sort((a, b) => new Date(b.start || '1900-01-01') - new Date(a.start || '1900-01-01'));
+    renderHighlights(items);
+
+  // Fixed timeline range: from start of 2014 up to end of 2026 (reverse-chronological)
+    const parse = s => { if (!s) return null; const p = s.split('-'); if (p.length === 1) return new Date(Number(p[0]), 0, 1); return new Date(Number(p[0]), Number(p[1]) - 1, 1); };
+    const timelineStart = new Date(2014,0,1);
+  const timelineEnd = new Date(2026,11,31);
+    const monthsBetween = (a,b) => (b.getFullYear()-a.getFullYear())*12 + (b.getMonth()-a.getMonth());
+    const totalMonths = Math.max(1, monthsBetween(timelineStart, timelineEnd));
+    const pxPerMonth = 12; // scale, smaller to keep length manageable
+    const totalHeight = Math.max(800, Math.min(2200, totalMonths * pxPerMonth));
+
+    const container = document.getElementById('timelineContainer');
+    container.style.height = totalHeight + 'px';
+
+    // place year markers along central line (keep only boxed year labels).
+    // Reserve space through timelineEnd but do not render a label for the final year (e.g., 2026).
+    for (let y = timelineStart.getFullYear(); y <= timelineEnd.getFullYear(); y++) {
+      const yearEl = document.createElement('div');
+      yearEl.className = 'timeline-year';
+      const yearDate = new Date(y,0,1);
+      // compute inverted position so newest (2026) appears near the top
+      const pos = monthsBetween(timelineStart, yearDate) / totalMonths;
+      yearEl.style.top = Math.round((1 - pos) * totalHeight) + 'px';
+      // render the year label for every year (including the final year)
+      yearEl.innerHTML = `<div class="year-label">${y}</div>`;
+      container.appendChild(yearEl);
+    }
+
+    const eduIds = new Set(['exp-1','exp-2','exp-3']);
+  const uniformCardHeight = 140; // px for non-edu cards (slightly taller)
+    const minEduHeight = 90; const maxEduHeight = 420;
+
+    // keep placed rects per side to avoid overlap
+    const placedLeft = [];
+    const placedRight = [];
+
+    // helper to render description: detect simple bullet lists starting with - or *
+    const renderDescHtml = (text) => {
+      if (!text) return '';
+      const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+      const isBullets = lines.length > 0 && lines.every(l => /^[-*]\s+/.test(l) || /^\d+\.\s+/.test(l));
+      if (isBullets) {
+        const itemsHtml = lines.map(l => {
+          const cleaned = l.replace(/^([-*]|\d+\.)\s+/, '');
+          return `<li>${escapeHtml(cleaned)}</li>`;
+        }).join('');
+        return `<div class="desc"><ul>${itemsHtml}</ul></div>`;
+      }
+      return `<div class="desc"><p>${escapeHtml(text)}</p></div>`;
+    };
+
+    items.forEach((x, idx) => {
+      const li = document.createElement('li');
+      const id = x.id || `i-${idx}`;
+  const sDate = parse(x.start) || timelineStart;
+  const eDate = x.end ? parse(x.end) : timelineEnd;
+      // clamp dates inside timeline range
+      const startDate = sDate < timelineStart ? timelineStart : sDate;
+      const endDate = eDate > timelineEnd ? timelineEnd : eDate;
+  const endMonths = monthsBetween(timelineStart, endDate);
+  const spanMonths = Math.max(1, monthsBetween(startDate, endDate));
+  // position (distance from top): newer dates (later) should be above older
+  // compute top based on the end date (anchor by end), inverted so later dates are near the top
+  const endPosPx = Math.round((1 - (endMonths / totalMonths)) * totalHeight);
+
+      let cardHeight;
+      let side;
+      if (eduIds.has(id)) {
+        // variable height proportional to duration
+        cardHeight = Math.round(spanMonths * pxPerMonth);
+        cardHeight = Math.max(minEduHeight, Math.min(maxEduHeight, cardHeight));
+        side = 'left';
+      } else {
+        cardHeight = uniformCardHeight;
+        side = 'right';
+      }
+
+      // collision avoidance on each side: try to place at topPx, else nudge down
+      const placed = side === 'left' ? placedLeft : placedRight;
+      // anchor by end date: align bottom of card to endPosPx
+      let cardTop = endPosPx - cardHeight;
+      if (cardTop < 8) cardTop = 8;
+      const intersects = (r1, r2) => !(r1.bottom <= r2.top || r1.top >= r2.bottom);
+      let attempts = 0;
+      while (placed.some(r => intersects({top: cardTop, bottom: cardTop + cardHeight}, r)) && attempts < 200) {
+        cardTop += 12; attempts++;
+      }
+      placed.push({ top: cardTop, bottom: cardTop + cardHeight });
+
+      li.className = side === 'left' ? 'left' : 'right';
+      const when = formatWhen(x.start, x.end);
+      const card = document.createElement('div');
+      card.className = 'card' + (eduIds.has(id) ? ' edu' : '');
+      card.setAttribute('role','button');
+      card.setAttribute('tabindex','0');
+      card.dataset.id = id;
+      // include a data-rich area for education cards (allow fuller HTML)
+      card.innerHTML = `<div class="when">${when}</div>
+        <div class="what">${escapeHtml(x.title)}</div>
+        <div class="where">${escapeHtml(x.org)}</div>
+        ${renderDescHtml(x.desc || '')}`;
+      card.style.height = cardHeight + 'px';
+      li.style.top = cardTop + 'px';
+      li.appendChild(card);
+
+      // click/keyboard open
+      card.addEventListener('click', () => { window.location = `experience.html?id=${id}`; });
+      card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') window.location = `experience.html?id=${id}`; });
       list.appendChild(li);
     });
   } catch (e) {
@@ -78,6 +188,21 @@ async function loadExperiences() {
   }
 }
 loadExperiences();
+
+// Header hide on scroll: hide when scrolling down, show when slight scroll up
+const header = $("#siteHeader");
+let lastScroll = window.scrollY; let ticking = false;
+const onScroll = () => {
+  const y = window.scrollY;
+  if (Math.abs(y - lastScroll) < 6) return; // ignore tiny deltas
+  if (y > lastScroll && y > 80) { // scrolling down
+    header.classList.add('hide'); header.classList.remove('show');
+  } else { // scrolling up
+    header.classList.remove('hide'); header.classList.add('show');
+  }
+  lastScroll = y;
+};
+window.addEventListener('scroll', () => { if (!ticking) { window.requestAnimationFrame(() => { onScroll(); ticking=false; }); ticking=true; } });
 
 // Posts: load & render
 let allPosts = [];
@@ -204,3 +329,35 @@ $("#clearPins").addEventListener("click", () => {
 });
 
 loadStoredPins();
+
+// Helpers for experiences
+function formatWhen(start, end){
+  const fmt = (s) => {
+    if (!s) return '';
+    // accept YYYY or YYYY-MM
+    const parts = s.split('-');
+    if (parts.length === 1) return parts[0];
+    const [y,m] = parts;
+    try { return new Date(`${y}-${m}-01`).toLocaleString(undefined, {month: 'short', year: 'numeric'}); } catch { return s; }
+  };
+  const startStr = fmt(start);
+  const endStr = end ? fmt(end) : 'present';
+  return `${startStr} — ${endStr}`;
+}
+
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderHighlights(items){
+  const container = $('#highlights');
+  if (!container) return;
+  container.innerHTML = '';
+  // pick up to 3 most recent items with titles
+  const picks = items.filter(i => i.title).slice(0,3);
+  picks.forEach(i => {
+    const a = document.createElement('div');
+    a.className = 'highlight';
+    const id = i.id || '';
+    a.innerHTML = `<a href="experience.html?id=${id}">${escapeHtml(i.title)} — <span class="muted">${escapeHtml(i.org)}</span></a>`;
+    container.appendChild(a);
+  });
+}

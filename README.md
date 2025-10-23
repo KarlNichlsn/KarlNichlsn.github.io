@@ -11,3 +11,11 @@ Changes:
 - Replace **`assets/favicon.png`** (32×32 PNG) and **`assets/apple-touch-icon.png`** (180×180 PNG).
 - You can also add `favicon.ico` if you prefer; add `<link rel="icon" href="favicon.ico">` to `index.html`.
 
+## issues:
+
+tags for blog not contrasted
+bubbles look weird. 
+header does not stay
+chronology of the line should be opposite
+remove the bookend circles -- it didn't understand these
+

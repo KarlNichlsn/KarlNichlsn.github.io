@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Experience — Details</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="brand">~ My Site</a>
+  </header>
+  <main class="container">
+    <h1 id="title">Experience</h1>
+    <div id="content"></div>
+    <p><a href="index.html">Back</a></p>
+  </main>
+  <script>
+    function qs(name){ const params = new URLSearchParams(location.search); return params.get(name); }
+    const id = qs('id');
+    async function load(){
+      try {
+        const res = await fetch('experiences.json');
+        const items = await res.json();
+        const exp = items.find(e => e.id === id) || items[0];
+        document.getElementById('title').textContent = exp.title || 'Experience';
+        const when = (exp.start||'') + (exp.end ? (' — ' + exp.end) : ' — present');
+        document.getElementById('content').innerHTML = `
+          <p class="muted">${when}</p>
+          <h2>${exp.org || ''}</h2>
+          <p>${exp.desc || ''}</p>
+        `;
+      } catch(e){ document.getElementById('content').textContent = 'Could not load.'; }
+    }
+    load();
+  </script>
+</body>
+</html>

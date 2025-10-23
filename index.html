@@ -9,13 +9,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
-  <!-- Favicon (replace assets/favicon.png later if desired) -->
+  <!-- Favicon: SVG (preferred) with PNG fallback. Replace files in assets/ with your own. -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.svg">
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header" id="siteHeader">
     <a href="#" class="brand" aria-label="Home">~ My Site</a>
+    <button id="homeBtn" class="favicon-btn" aria-label="Home" title="Home">
+      <img src="assets/favicon.png" alt="Home" />
+    </button>
     <nav class="nav" id="nav">
       <a href="#about" class="nav-link">About</a>
       <a href="#travel" class="nav-link">Travel &amp; Thoughts</a>
@@ -23,8 +27,8 @@
     </nav>
     <div class="header-actions">
       <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme"></button>
-      <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav">
-        <span></span><span></span><span></span>
+      <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav" title="Menu">
+        <img src="assets/favicon.png" alt="Menu" />
       </button>
     </div>
   </header>
@@ -46,20 +50,32 @@
 
         <h2 class="mt">Experience</h2>
         <p class="muted">A chronological timeline. MAY CHANGE to central or allow overlaps</p>
+        <h3>Highlights</h3>
+        <div class="highlights" id="highlights" aria-live="polite"></div>
+        <h3 class="mt">Timeline</h3>
         <div class="timeline-wrapper">
-          <ol id="timeline" class="timeline" aria-live="polite"></ol>
+          <div id="timelineContainer" class="timeline-container">
+            <ol id="timeline" class="timeline" aria-live="polite"></ol>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Travel & Thoughts -->
     <section id="travel" class="section">
+      <!-- Full-width under construction banner -->
+      <div class="fullwide-uc">
+        <div class="container">
+          <span class="under-construction">UNDER CONSTRUCTION</span>
+        </div>
+      </div>
       <div class="container">
         <h1>Travel &amp; Thoughts</h1>
         <div class="map-and-legend">
           <div class="map-wrap">
             <img id="worldMap" src="assets/world-map-mercator.jpg" alt="World map (Mercator projection)" />
             <div id="pins" class="pins" aria-live="polite"></div>
+            <div class="travel-overlay" aria-hidden="true"></div>
           </div>
           <div class="map-legend">
             <h3>Pin a Post</h3>
@@ -77,6 +93,7 @@
           </select>
         </div>
 
+        
         <div id="posts" class="posts" aria-live="polite"></div>
         <p class="muted">some musings</p>
       </div>
@@ -86,7 +103,7 @@
     <section id="contact" class="section">
       <div class="container">
         <h1>Contact</h1>
-        <p>Say hi — I’m friendly.</p>
+        <p>Reach out!.</p>
         <div class="cta-row">
           <a class="btn" id="linkedinContact" href="#" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
           <a class="btn" id="emailContact" href="mailto:you@example.com" aria-label="Email me">Email</a>

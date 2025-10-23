@@ -17,7 +17,7 @@
       "travel",
       "thailand"
     ],
-    "url": "posts/koh_tao.html"
+    "url": "posts/kyoto-in-late-autumn.html"
   },
   {
     "title": "Hoi-An food",
@@ -28,7 +28,7 @@
       "vietnam",
       "food"
     ],
-    "url": "posts/kohnew.html"
+    "url": "posts/on-carrying-less.html"
   },
   {
     "title": "On being Irish",
@@ -41,5 +41,12 @@
     ],
     "url": "posts/try_not_to_sasanach.html"
   }
-  
+  ,
+  {
+    "title": "Placeholder: A note on notebooks",
+    "date": "2023-12-01",
+    "excerpt": "Small note to ensure links render correctly.",
+    "tags": ["tech","note"],
+    "url": "posts/placeholder-note.html"
+  }
 ]

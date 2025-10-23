@@ -1,100 +1,90 @@
 [
   {
+    "id": "exp-1",
     "title": "MPhil Data Intensive Science",
     "org": "University of Cambridge",
-    "start": "2025",
-    "end": "",
+    "start": "2025-10",
+    "end": "2026-10",
     "desc": "Learning cutting edge ML techniques for science!"
   },
   {
-    "title": "Consultant",
+    "id": "exp-9",
+    "title": "Consultant -ret.",
     "org": "Startup 1",
-    "start": "2025",
-    "end": "2025",
+    "start": "2025-06",
+    "end": "2025-09",
     "desc": "Memory AI app"
   },
   {
+    "id": "exp-14",
     "title": "Physics Expert",
     "org": "Startup 2",
-    "start": "2025",
-    "end": "2025",
+    "start": "2025-03",
+    "end": "2025-05",
     "desc": "Helping AIs to learn to solve physics questions"
   },
   {
-    "title": "REDACTED",
-    "org": "Multinational 1",
-    "start": "2024",
-    "end": "2025",
-    "desc": "Explored ideas at the intersection of X and Y."
-  },
-  {
+    "id": "exp-5",
     "title": "Pathplanning Team Lead",
     "org": "Formula Trinity",
-    "start": "2018",
-    "end": "2018",
+    "start": "2023-12",
+    "end": "2024-04",
     "desc": "XYZ to fill out."
   },
   {
+    "id": "exp-6",
     "title": "Control Team Member",
     "org": "Formula Trinity",
-    "start": "2017",
-    "end": "2019",
+    "start": "2017-02",
+    "end": "2019-11",
     "desc": "autonomous driving car algorithm!."
   },
   {
+    "id": "exp-7",
     "title": "Student Researcher",
     "org": "Harvard-Smithsonian Center for Astrophysics",
-    "start": "2023",
-    "end": "2024",
+    "start": "2023-09",
+    "end": "2023-12",
     "desc": "Research on NGC891."
   },
   {
-    "title": "Control Team Member",
-    "org": "Formula Trinity",
-    "start": "2017",
-    "end": "2019",
-    "desc": "autonomous driving car!."
-  },
-  {
+    "id": "exp-2",
     "title": "BA Mod. (Hons) Physics & Astrophysics",
     "org": "Trinity College Dublin",
-    "start": "2020",
-    "end": "2024",
+    "start": "2020-09",
+    "end": "2024-06",
     "desc": "UG degree"
   },
   {
+    "id": "exp-10",
     "title": "Early University Entrance",
     "org": "Centre for Talented Youth Ireland",
-    "start": "2013",
-    "end": "2013",
+    "start": "2018-09",
+    "end": "2019-01",
     "desc": "Electrical and matericals engineering. XYZ update dates and fill out."
   },
   {
+    "id": "exp-11",
     "title": "Theoretical Physics",
     "org": "Centre for Talented Youth Ireland",
-    "start": "2013",
-    "end": "2013",
+    "start": "2016-05",
+    "end": "2016-06",
     "desc": "XYZ update dates and fill out - summer prog."
   },
   {
+    "id": "exp-12",
     "title": "Sports Science",
     "org": "Centre for Talented Youth Ireland",
-    "start": "2013",
-    "end": "2013",
+    "start": "2017-05",
+    "end": "2017-06",
     "desc": "XYZ update dates and fill out - summer prog."
   },
   {
-    "title": "",
-    "org": "Entrepreneurs First",
-    "start": "2012",
-    "end": "2012",
-    "desc": "XYZ update dates and fill out."
-  },
-  {
+    "id": "exp-3",
     "title": "Student",
-    "org": "University C",
-    "start": "2016",
-    "end": "2020",
+    "org": "STMC",
+    "start": "2014-09",
+    "end": "2020-06",
     "desc": "Studied interesting things and built side projects."
   }
 ]
