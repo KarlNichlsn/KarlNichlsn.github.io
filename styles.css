@@ -215,7 +215,7 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 .timeline-year { position: absolute; left: 50%; transform: translateX(-50%); top: 0; display: flex; gap: 8px; align-items: center; z-index: 5; }
 /* Removed circular bookend markers: keep year label only */
 .timeline-year .year-label { background: var(--paper); border: 1px solid var(--line); padding: 0.15rem .45rem; border-radius: 8px; font-family: "IBM Plex Mono", ui-monospace, monospace; color: var(--muted); font-weight: 600; }
-.timeline-year::before { content: ""; position: absolute; left: 50%; transform: translateX(-50%); width: 220px; height: 12px; top: 50%; background: var(--paper); border-radius: 8px; border: 1px solid var(--line); transform: translate(-50%, -50%); z-index: -1; }
+
 
 @media (max-width: 900px) {
   .timeline li .card { width: calc(100% - 56px); margin: 0; }

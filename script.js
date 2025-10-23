@@ -131,36 +131,38 @@ async function loadExperiences() {
       // clamp dates inside timeline range
       const startDate = sDate < timelineStart ? timelineStart : sDate;
       const endDate = eDate > timelineEnd ? timelineEnd : eDate;
+  const startMonths = monthsBetween(timelineStart, startDate);
   const endMonths = monthsBetween(timelineStart, endDate);
   const spanMonths = Math.max(1, monthsBetween(startDate, endDate));
-  // position (distance from top): newer dates (later) should be above older
-  // compute top based on the end date (anchor by end), inverted so later dates are near the top
+  // compute visual positions (inverted so later dates are nearer to top)
+  const startPosPx = Math.round((1 - (startMonths / totalMonths)) * totalHeight);
   const endPosPx = Math.round((1 - (endMonths / totalMonths)) * totalHeight);
 
-      let cardHeight;
-      let side;
+  let cardHeight;
+  let side;
+  let cardTop;
       if (eduIds.has(id)) {
-        // variable height proportional to duration
-        cardHeight = Math.round(spanMonths * pxPerMonth);
-        cardHeight = Math.max(minEduHeight, Math.min(maxEduHeight, cardHeight));
         side = 'left';
+        // education: anchor top at end date and bottom at start date exactly
+        const rawHeight = startPosPx - endPosPx;
+        cardHeight = Math.max(2, Math.round(rawHeight)); // allow small spans but keep visible
+        cardTop = endPosPx;
+        // keep exact date mapping for education items
+        placedLeft.push({ top: cardTop, bottom: cardTop + cardHeight });
       } else {
-        cardHeight = uniformCardHeight;
         side = 'right';
+        // non-edu: uniform height, bottom anchored at start date; allow nudging to avoid overlaps
+        cardHeight = uniformCardHeight;
+        cardTop = startPosPx - cardHeight;
+        if (cardTop < 8) cardTop = 8;
+        const placed = placedRight;
+        const intersects = (r1, r2) => !(r1.bottom <= r2.top || r1.top >= r2.bottom);
+        let attempts = 0;
+        while (placed.some(r => !(cardTop + cardHeight <= r.top || cardTop >= r.bottom)) && attempts < 200) {
+          cardTop += 12; attempts++;
+        }
+        placed.push({ top: cardTop, bottom: cardTop + cardHeight });
       }
-
-      // collision avoidance on each side: try to place at topPx, else nudge down
-      const placed = side === 'left' ? placedLeft : placedRight;
-      // anchor by end date: align bottom of card to endPosPx
-      let cardTop = endPosPx - cardHeight;
-      if (cardTop < 8) cardTop = 8;
-      const intersects = (r1, r2) => !(r1.bottom <= r2.top || r1.top >= r2.bottom);
-      let attempts = 0;
-      while (placed.some(r => intersects({top: cardTop, bottom: cardTop + cardHeight}, r)) && attempts < 200) {
-        cardTop += 12; attempts++;
-      }
-      placed.push({ top: cardTop, bottom: cardTop + cardHeight });
-
       li.className = side === 'left' ? 'left' : 'right';
       const when = formatWhen(x.start, x.end);
       const card = document.createElement('div');
