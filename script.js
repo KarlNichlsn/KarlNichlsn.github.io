@@ -76,7 +76,7 @@ async function loadExperiences() {
 
   // Fixed timeline range: from start of 2014 up to end of 2026 (reverse-chronological)
     const parse = s => { if (!s) return null; const p = s.split('-'); if (p.length === 1) return new Date(Number(p[0]), 0, 1); return new Date(Number(p[0]), Number(p[1]) - 1, 1); };
-    const timelineStart = new Date(2014,0,1);
+  const timelineStart = new Date(2016,0,1);
   const timelineEnd = new Date(2026,11,31);
     const monthsBetween = (a,b) => (b.getFullYear()-a.getFullYear())*12 + (b.getMonth()-a.getMonth());
     const totalMonths = Math.max(1, monthsBetween(timelineStart, timelineEnd));
@@ -128,9 +128,10 @@ async function loadExperiences() {
       const id = x.id || `i-${idx}`;
   const sDate = parse(x.start) || timelineStart;
   const eDate = x.end ? parse(x.end) : timelineEnd;
-      // clamp dates inside timeline range
-      const startDate = sDate < timelineStart ? timelineStart : sDate;
-      const endDate = eDate > timelineEnd ? timelineEnd : eDate;
+    // clamp dates inside timeline range; nudge pre-range starts a couple months forward
+    // so items that began earlier (e.g. STMC) don't sit flush at the very bottom.
+    const endDate = eDate > timelineEnd ? timelineEnd : eDate;
+    let startDate = sDate < timelineStart ? new Date(timelineStart.getFullYear(), timelineStart.getMonth() + 2, 1) : sDate;
   const startMonths = monthsBetween(timelineStart, startDate);
   const endMonths = monthsBetween(timelineStart, endDate);
   const spanMonths = Math.max(1, monthsBetween(startDate, endDate));

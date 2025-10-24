@@ -35,8 +35,8 @@
     "id": "exp-6",
     "title": "Control Team Member",
     "org": "Formula Trinity",
-    "start": "2017-02",
-    "end": "2019-11",
+    "start": "2022-10",
+    "end": "2023-05",
     "desc": "autonomous driving car algorithm!."
   },
   {
@@ -85,6 +85,22 @@
     "org": "STMC",
     "start": "2014-09",
     "end": "2020-06",
+    "desc": "Studied interesting things and built side projects."
+  },
+  {
+    "id": "exp-14",
+    "title": "Intern",
+    "org": "World Science Festival/Scholars",
+    "start": "2023-05",
+    "end": "2023-07",
+    "desc": "Brian Green, John Mather, etc."
+  },
+  {
+    "id": "exp-15",
+    "title": "Student Researcher",
+    "org": "Irish Low Frequency Array",
+    "start": "2022-05",
+    "end": "2022-07",
     "desc": "Studied interesting things and built side projects."
   }
 ]

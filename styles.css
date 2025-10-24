@@ -32,6 +32,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background .4s ease, color .4s ease, border-color .35s ease;
 }
+/* leave room for the fixed header so page content is not hidden */
+body { padding-top: 64px; }
 
 h1, h2, h3 { font-weight: 600; letter-spacing: 0.4px; }
 h1 { font-size: clamp(1.6rem, 2.2vw + 1rem, 2.4rem); margin: 0 0 0.75rem; }
@@ -50,9 +52,9 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 .tiny-link:hover { color: var(--ink); }
 
 .site-header {
-  position: sticky; top: 0; z-index: 20;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1200;
   backdrop-filter: blur(6px);
-  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
   border-bottom: 1px solid var(--line);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.6rem 1rem;
@@ -176,12 +178,60 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
   content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);
   width: 2px; height: 100%; background: linear-gradient(to bottom, var(--line), var(--line));
 }
+
+/* small circular markers at the very top and bottom of the central timeline line */
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  z-index: 8;
+  box-shadow: var(--shadow);
+}
+.timeline-container::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  z-index: 8;
+  box-shadow: var(--shadow);
+}
 .timeline li { position: absolute; width: 50%; box-sizing: border-box; }
 .timeline li.left { left: 0; text-align: right; }
 .timeline li.right { left: 50%; }
 .timeline li .card { display: inline-block; width: 420px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 0.7rem 0.9rem; box-shadow: var(--shadow); vertical-align: top; }
 /* remove per-card circular markers */
 .timeline li::after { display: none; }
+
+/* About headshot placeholder: oval, angled */
+.headshot {
+  width: 140px;
+  height: 160px;
+  border-radius: 48% / 54%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--paper) 88%, #f6f6f6), color-mix(in oklab, var(--paper) 96%, #fafafa));
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transform: rotate(-12deg);
+  float: right;
+  margin-left: 1rem;
+  margin-bottom: 0.6rem;
+}
+.headshot span { font-size: 48px; display: block; }
+@media (max-width: 900px) {
+  .headshot { float: none; margin: 0 auto 1rem; transform: rotate(0); display: block; }
+}
 
 /* Card hover + clickable cursor */
 .timeline li .card { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; cursor: pointer; }
