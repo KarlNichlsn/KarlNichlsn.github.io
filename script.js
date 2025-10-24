@@ -89,6 +89,8 @@ async function loadExperiences() {
     // place year markers along central line (keep only boxed year labels).
     // Reserve space through timelineEnd but do not render a label for the final year (e.g., 2026).
     for (let y = timelineStart.getFullYear(); y <= timelineEnd.getFullYear(); y++) {
+      // skip rendering the very first year label (timelineStart) so we don't show 2016
+      if (y === timelineStart.getFullYear()) continue;
       const yearEl = document.createElement('div');
       yearEl.className = 'timeline-year';
       const yearDate = new Date(y,0,1);

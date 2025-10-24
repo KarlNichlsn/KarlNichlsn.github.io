@@ -213,8 +213,8 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 
 /* About headshot placeholder: oval, angled */
 .headshot {
-  width: 140px;
-  height: 160px;
+  width: 240px;
+  height: 280px;
   border-radius: 48% / 54%;
   overflow: hidden;
   display: inline-flex;
@@ -228,10 +228,13 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
   margin-left: 1rem;
   margin-bottom: 0.6rem;
 }
-.headshot span { font-size: 48px; display: block; }
+.headshot img { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 900px) {
-  .headshot { float: none; margin: 0 auto 1rem; transform: rotate(0); display: block; }
+  .headshot { float: none; margin: 0 auto 1rem; transform: rotate(0); display: block; width: 180px; height: 210px; }
 }
+
+/* Narrow the About intro text for better readability */
+#about .container .intro { max-width: 66ch; }
 
 /* Card hover + clickable cursor */
 .timeline li .card { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; cursor: pointer; }
