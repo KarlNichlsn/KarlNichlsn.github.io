@@ -9,19 +9,19 @@
   },
   {
     "id": "exp-9",
-    "title": "Consultant -ret.",
-    "org": "Startup 1",
+    "title": "Design Engineering Consultant",
+    "org": "Retainit",
     "start": "2025-06",
     "end": "2025-09",
-    "desc": "Memory AI app"
+    "desc": "Memory AI application for youtube & podcasts"
   },
   {
     "id": "exp-14",
     "title": "Physics Expert",
-    "org": "Startup 2",
+    "org": "Visely AI",
     "start": "2025-03",
     "end": "2025-05",
-    "desc": "Helping AIs to learn to solve physics questions"
+    "desc": "AI Physics solution development (UG level)"
   },
   {
     "id": "exp-5",
@@ -53,7 +53,7 @@
     "org": "Trinity College Dublin",
     "start": "2020-09",
     "end": "2024-06",
-    "desc": "UG degree"
+    "desc": "UG Thesis completed @ Harvard-Smithsonian Center for Astrophysics \n Molecular CO observations of NGC891 \n \n Laidlaw Undergraduate Leadership & Research Scholarship\n Entrance Exhibitioner \n Undergraduate of the Year for Innovation finalist \n\nFormula Trintiy Autonomous \n Autonomous Driving Car solution, competed @ Formula Student in Silverstone x2\n Tata Elxsi Autonomous Best Design Award 2024 \n\n Societies: \n Snowsports, Physics Soc, Card Soc, Rowing \n Division 1 Rugby Player @ Harvard"
   },
   {
     "id": "exp-10",
@@ -61,46 +61,38 @@
     "org": "Centre for Talented Youth Ireland",
     "start": "2018-09",
     "end": "2019-01",
-    "desc": "Electrical and matericals engineering. XYZ update dates and fill out."
+    "desc": "Electrical & Materials Engineering UG modules"
   },
   {
     "id": "exp-11",
-    "title": "Theoretical Physics",
+    "title": "Theoretical Physics/Sports Science",
     "org": "Centre for Talented Youth Ireland",
     "start": "2016-05",
-    "end": "2016-06",
-    "desc": "XYZ update dates and fill out - summer prog."
-  },
-  {
-    "id": "exp-12",
-    "title": "Sports Science",
-    "org": "Centre for Talented Youth Ireland",
-    "start": "2017-05",
     "end": "2017-06",
-    "desc": "XYZ update dates and fill out - summer prog."
+    "desc": "High academic ability summer programmes"
   },
   {
     "id": "exp-3",
     "title": "Student",
-    "org": "STMC",
+    "org": "St Michael's College",
     "start": "2014-09",
     "end": "2020-06",
-    "desc": "Studied interesting things and built side projects."
+    "desc": "Leaving Certificate: 613/625 (top 1.5%)\n Higher Level: Mathematics, Physics, Chemistry, Applied Mathematics, French, English, Business \n Academic Medals 1st - 6th year \n Science & Chemistry Olympiad team \n ??? NAME?? General Excellence Award \n \n Rugby: Leinster U17 League, Cup & Plate first place \n French Debating (Joutes Oratoires) finalist \n "
   },
   {
     "id": "exp-14",
-    "title": "Intern",
+    "title": "Teaching Fellow",
     "org": "World Science Festival/Scholars",
     "start": "2023-05",
     "end": "2023-07",
-    "desc": "Brian Green, John Mather, etc."
+    "desc": "Teaching exceptional kids w/ John Mather, Brian Greene ..."
   },
   {
     "id": "exp-15",
-    "title": "Student Researcher",
+    "title": "Laidlaw UG Researcher",
     "org": "Irish Low Frequency Array",
     "start": "2022-05",
     "end": "2022-07",
-    "desc": "Studied interesting things and built side projects."
+    "desc": "Solar Emission Spectra analysis using I-LOFAR"
   }
 ]

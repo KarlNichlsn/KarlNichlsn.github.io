@@ -250,6 +250,8 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 .timeline li.left .card.edu .desc { margin-top: 0.6rem; color: var(--muted); font-size: 0.95rem; }
 .timeline li.left .card.edu .desc ul { margin: 0.25rem 0 0 1rem; }
 .timeline li.left .card.edu .desc li { margin: 0.3rem 0; }
+/* preserve newlines from JSON (\n) inside description paragraphs */
+.desc p { white-space: pre-line; }
 
 /* Right side: uniform card sizes (height controlled via JS) */
 .timeline li.right .card { width: 420px; }
