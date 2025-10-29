@@ -16,21 +16,64 @@
     <p><a href="index.html">Back</a></p>
   </main>
   <script>
+    // Query helper
     function qs(name){ const params = new URLSearchParams(location.search); return params.get(name); }
     const id = qs('id');
+
+    // escape for plain text insertion when necessary
+    function escapeHtml(s){ return String(s||'').replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
     async function load(){
       try {
         const res = await fetch('experiences.json');
         const items = await res.json();
-        const exp = items.find(e => e.id === id) || items[0];
+        const exp = items.find(e => e.id === id) || items[0] || {};
         document.getElementById('title').textContent = exp.title || 'Experience';
         const when = (exp.start||'') + (exp.end ? (' — ' + exp.end) : ' — present');
-        document.getElementById('content').innerHTML = `
-          <p class="muted">${when}</p>
-          <h2>${exp.org || ''}</h2>
-          <p>${exp.desc || ''}</p>
-        `;
-      } catch(e){ document.getElementById('content').textContent = 'Could not load.'; }
+
+        // Build content: when/org, long description or short desc, images, links
+        let html = `<p class="muted">${escapeHtml(when)}</p>`;
+        if (exp.org) html += `<h2>${escapeHtml(exp.org)}</h2>`;
+
+        // If the data contains 'longDesc' (which may include HTML), render it as HTML.
+        if (exp.longDesc) {
+          // trust longDesc as authored HTML (keep simple, you can sanitize if needed)
+          html += `<div class="long-desc">${exp.longDesc}</div>`;
+        } else if (exp.desc) {
+          // plain text description: preserve newlines
+          const text = escapeHtml(exp.desc).replace(/\n/g, '<br>');
+          html += `<div class="desc"><p>${text}</p></div>`;
+        }
+
+        // Images: optional array of {src, caption}
+        if (Array.isArray(exp.images) && exp.images.length) {
+          html += `<div class="exp-gallery">`;
+          exp.images.forEach(img => {
+            const src = escapeHtml(img.src || img);
+            const caption = img.caption ? escapeHtml(img.caption) : '';
+            html += `<figure><img src="${src}" alt="${caption || escapeHtml(exp.title||'')}">`;
+            if (caption) html += `<figcaption>${caption}</figcaption>`;
+            html += `</figure>`;
+          });
+          html += `</div>`;
+        }
+
+        // Links: optional array of {url, label}
+        if (Array.isArray(exp.links) && exp.links.length) {
+          html += `<div class="exp-links"><h3>Related</h3><ul>`;
+          exp.links.forEach(l => {
+            const url = escapeHtml(l.url || l);
+            const label = escapeHtml(l.label || l.url || l);
+            html += `<li><a href="${url}" target="_blank" rel="noopener">${label}</a></li>`;
+          });
+          html += `</ul></div>`;
+        }
+
+        document.getElementById('content').innerHTML = html || '<p>No details available.</p>';
+      } catch(e){
+        console.error(e);
+        document.getElementById('content').textContent = 'Could not load.';
+      }
     }
     load();
   </script>

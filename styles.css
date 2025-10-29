@@ -367,6 +367,15 @@ code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consol
 .post .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .post .tag { font-size: 0.8rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.1rem 0.4rem; }
 
+/* experience detail page styles */
+.exp-gallery { display:flex; gap:12px; flex-wrap:wrap; margin: 0.6rem 0; }
+.exp-gallery figure { width: min(360px, 48%); margin:0; border:1px solid var(--line); background: var(--paper); padding:6px; border-radius:8px; }
+.exp-gallery img { width:100%; height:auto; display:block; border-radius:6px; }
+.exp-gallery figcaption { font-size:0.9rem; color:var(--muted); margin-top:0.4rem; }
+.exp-links ul { margin:0.4rem 0 0 1.05rem; }
+.exp-links li { margin: 0.25rem 0; }
+.long-desc { margin-top: .4rem; color: var(--muted); }
+
 .site-footer {
   border-top: 1px solid var(--line);
   padding: 1.2rem 0 1.8rem;

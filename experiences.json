@@ -93,6 +93,7 @@
     "org": "Irish Low Frequency Array",
     "start": "2022-05",
     "end": "2022-07",
-    "desc": "Solar Emission Spectra analysis using I-LOFAR"
+    "desc": "Solar Emission Spectra analysis using I-LOFAR",
+    "longDesc": "WARNING: AI SLOP -- During my tenure as a Laidlaw Undergraduate Researcher at the Irish Low Frequency Array (I-LOFAR), I undertook an in-depth analysis of solar emission spectra. This project involved processing and interpreting radio frequency data collected by the I-LOFAR telescope array to study various solar phenomena, including solar flares and coronal mass ejections.\n\nMy responsibilities included data cleaning, spectral analysis, and the application of statistical methods to identify patterns and anomalies in the solar emissions. I collaborated closely with a team of researchers, contributing to discussions on data interpretation and the implications of our findings for understanding solar activity.\n\nThis experience not only enhanced my technical skills in data analysis and astrophysics but also provided me with valuable insights into the research process within a leading scientific institution. The project culminated in a comprehensive report detailing our findings, which I presented to my peers and mentors at the conclusion of the program."
   }
 ]
