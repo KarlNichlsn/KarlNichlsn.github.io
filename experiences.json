@@ -5,7 +5,7 @@
     "org": "University of Cambridge",
     "start": "2025-10",
     "end": "2026-10",
-    "desc": "Learning cutting edge ML techniques for science! \n Relvant modules: Advanced Statistics, Deep Learning \netc"
+    "desc": "Cutting edge ML techniques for physics/science!"
   },
   {
     "id": "exp-9",
@@ -16,6 +16,14 @@
     "desc": "Memory AI application for youtube & podcasts"
   },
   {
+    "id": "exp-7",
+    "title": "Student Researcher",
+    "org": "Harvard-Smithsonian Center for Astrophysics",
+    "start": "2023-09",
+    "end": "2023-12",
+    "desc": "Research on NGC891"
+  },
+  {
     "id": "exp-14",
     "title": "Physics Expert",
     "org": "Visely AI",
@@ -23,30 +31,16 @@
     "end": "2025-05",
     "desc": "AI Physics solution development (UG level)"
   },
-  {
-    "id": "exp-5",
-    "title": "Pathplanning Team Lead",
-    "org": "Formula Trinity",
-    "start": "2023-12",
-    "end": "2024-04",
-    "desc": "XYZ to fill out."
-  },
+  
   {
     "id": "exp-6",
-    "title": "Control Team Member",
+    "title": "Pathplanning Lead/Control Member",
     "org": "Formula Trinity",
-    "start": "2022-10",
-    "end": "2023-05",
-    "desc": "autonomous driving car algorithm!."
+    "start": "2022-12",
+    "end": "2024-05",
+    "desc": "Autonomous  Car team, competing @ FSUK"
   },
-  {
-    "id": "exp-7",
-    "title": "Student Researcher",
-    "org": "Harvard-Smithsonian Center for Astrophysics",
-    "start": "2023-09",
-    "end": "2023-12",
-    "desc": "Research on NGC891."
-  },
+  
   {
     "id": "exp-2",
     "title": "BA Mod. (Hons) Physics & Astrophysics",
@@ -85,7 +79,7 @@
     "org": "World Science Festival/Scholars",
     "start": "2023-05",
     "end": "2023-07",
-    "desc": "Teaching exceptional kids w/ John Mather, Brian Greene ..."
+    "desc": "Teaching exceptional kids & doing outreach w/ John Mather, Brian Greene, and others"
   },
   {
     "id": "exp-15",
@@ -94,6 +88,6 @@
     "start": "2022-05",
     "end": "2022-07",
     "desc": "Solar Emission Spectra analysis using I-LOFAR",
-    "longDesc": "WARNING: AI SLOP -- During my tenure as a Laidlaw Undergraduate Researcher at the Irish Low Frequency Array (I-LOFAR), I undertook an in-depth analysis of solar emission spectra. This project involved processing and interpreting radio frequency data collected by the I-LOFAR telescope array to study various solar phenomena, including solar flares and coronal mass ejections.\n\nMy responsibilities included data cleaning, spectral analysis, and the application of statistical methods to identify patterns and anomalies in the solar emissions. I collaborated closely with a team of researchers, contributing to discussions on data interpretation and the implications of our findings for understanding solar activity.\n\nThis experience not only enhanced my technical skills in data analysis and astrophysics but also provided me with valuable insights into the research process within a leading scientific institution. The project culminated in a comprehensive report detailing our findings, which I presented to my peers and mentors at the conclusion of the program."
+    "longDesc": "WARNING: AI SLOP --- During my tenure as a Laidlaw Undergraduate Researcher at the Irish Low Frequency Array (I-LOFAR), I undertook an in-depth analysis of solar emission spectra. This project involved processing and interpreting radio frequency data collected by the I-LOFAR telescope array to study various solar phenomena, including solar flares and coronal mass ejections.\n\nMy responsibilities included data cleaning, spectral analysis, and the application of statistical methods to identify patterns and anomalies in the solar emissions. I collaborated closely with a team of researchers, contributing to discussions on data interpretation and the implications of our findings for understanding solar activity.\n\nThis experience not only enhanced my technical skills in data analysis and astrophysics but also provided me with valuable insights into the research process within a leading scientific institution." 
   }
 ]
