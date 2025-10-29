@@ -356,8 +356,15 @@ function renderHighlights(items){
   const container = $('#highlights');
   if (!container) return;
   container.innerHTML = '';
-  // pick up to 3 most recent items with titles
-  const picks = items.filter(i => i.title).slice(0,3);
+  // pick up to 3 items to highlight. Prefer items with `highlight: true`,
+  // otherwise fall back to the newest items (items is already sorted newest-first).
+  let picks = [];
+  const featured = items.filter(i => i.title && i.highlight);
+  if (featured.length) picks = featured.slice(0,3);
+  if (picks.length < 3) {
+    const others = items.filter(i => i.title && !i.highlight && !picks.includes(i));
+    picks = picks.concat(others.slice(0, 3 - picks.length));
+  }
   picks.forEach(i => {
     const a = document.createElement('div');
     a.className = 'highlight';
