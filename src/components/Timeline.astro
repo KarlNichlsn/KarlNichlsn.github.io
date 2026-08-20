@@ -1,0 +1,46 @@
+---
+import { timelineNewestFirst, type TimelineEvent } from '../data/timeline';
+
+const categoryLabel: Record<TimelineEvent['category'], string> = {
+  academic: 'Academic / professional',
+  other: 'Other pursuits',
+};
+
+const formatDate = (value: string) => {
+  const [year, month] = value.split('-');
+  if (!month) return year;
+  return new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric' }).format(
+    new Date(Number(year), Number(month) - 1, 1),
+  );
+};
+
+const formatPeriod = (event: TimelineEvent) => {
+  const start = formatDate(event.start);
+  const end = event.end ? formatDate(event.end) : 'Present';
+  return start === end ? start : `${start}–${end}`;
+};
+---
+
+<div class="timeline-key" aria-hidden="true">
+  <span>Academic / professional</span>
+  <span>Other pursuits</span>
+</div>
+
+<ol class="timeline" aria-label="Life timeline">
+  {timelineNewestFirst.map((event) => (
+    <li class:list={['timeline__event', `timeline__event--${event.category}`]}>
+      <span class="timeline__marker" aria-hidden="true"></span>
+      <article class="timeline-card" id={event.id}>
+        <p class="timeline-card__meta">
+          <span class="timeline-card__category">{categoryLabel[event.category]}</span>
+          <span>{formatPeriod(event)}</span>
+        </p>
+        <h3>
+          {event.href ? <a href={event.href}>{event.title}</a> : event.title}
+        </h3>
+        {event.organisation && <p class="timeline-card__organisation">{event.organisation}</p>}
+        <p>{event.summary}</p>
+      </article>
+    </li>
+  ))}
+</ol>

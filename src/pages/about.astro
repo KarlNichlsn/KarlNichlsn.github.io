@@ -1,0 +1,42 @@
+---
+import PageHeader from '../components/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About — Karl Nicholson"
+  description="About Karl Nicholson: physics, astrophysics, data-intensive science, research, engineering and writing."
+>
+  <div class="page-shell">
+    <PageHeader
+      eyebrow="About"
+      title="Curiosity, carried between disciplines."
+      introduction="Karl Nicholson is a physics and astrophysics graduate working across scientific research, machine learning and technical problem-solving."
+    />
+
+    <div class="about-grid">
+      <div class="narrative-copy">
+        <p>
+          Karl studied Physics and Astrophysics at Trinity College Dublin, where his work included
+          autonomous-vehicle systems with Formula Trinity and undergraduate radio-astronomy research
+          with I-LOFAR.
+        </p>
+        <p>
+          His thesis and capstone research at the Center for Astrophysics | Harvard–Smithsonian used
+          Sub-Millimeter Array observations to investigate Giant Molecular Clouds in NGC 891. He is
+          currently studying for an MPhil in Data Intensive Science at the University of Cambridge.
+        </p>
+        <p>
+          Alongside research and engineering, his experience includes science teaching and outreach
+          with the World Science Foundation, applied AI work, university representation and sport.
+          This site brings those strands together with selected projects, essays and travel writing.
+        </p>
+        <p><a class="text-link" href="/cv/">Read the full CV →</a></p>
+      </div>
+
+      <figure class="about-portrait">
+        <img src="/assets/Headshot_1.jpeg" width="200" height="200" alt="Karl Nicholson" loading="eager" />
+      </figure>
+    </div>
+  </div>
+</BaseLayout>

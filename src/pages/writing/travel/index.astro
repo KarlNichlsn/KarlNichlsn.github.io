@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import PageHeader from '../../../components/PageHeader.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const travel = (await getCollection('travel')).filter((entry) => !entry.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+type TravelEntry = (typeof travel)[number];
+const destinations = new Map<string, { location: TravelEntry['data']['location']; entries: TravelEntry[] }>();
+
+for (const entry of travel) {
+  const existing = destinations.get(entry.data.location.id);
+  if (existing) existing.entries.push(entry);
+  else destinations.set(entry.data.location.id, { location: entry.data.location, entries: [entry] });
+}
+
+const destinationList = [...destinations.values()].sort((a, b) => a.location.name.localeCompare(b.location.name));
+---
+
+<BaseLayout title="Travel writing — Karl Nicholson" description="Travel writing by Karl Nicholson, organised by destination.">
+  <div class="page-shell">
+    <PageHeader
+      eyebrow="Writing · Travel"
+      title="Places, read as stories."
+      introduction="The textual destination index is the canonical way to browse travel writing. A Mercator map will enhance this page in a later pass."
+    />
+
+    <ol class="destination-list">
+      {destinationList.map(({ location, entries }) => (
+        <li>
+          <article>
+            <div>
+              <h2>{location.name}</h2>
+              <p>{location.country}</p>
+              <p class="destination-list__coordinates">{location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}</p>
+            </div>
+            <div>
+              <p class="eyebrow">{entries.length} {entries.length === 1 ? 'post' : 'posts'}</p>
+              {entries.map((entry) => (
+                <div>
+                  <h3><a href={`/writing/travel/${entry.id}/`}>{entry.data.title}</a></h3>
+                  <p>{entry.data.description}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </li>
+      ))}
+    </ol>
+  </div>
+</BaseLayout>
