@@ -1,6 +1,6 @@
 ---
 title: "On Carrying Less"
-description: "Notes on minimal packing and why I ditched the third lens."
+description: "Site under construction."
 date: 2024-07-01
 type: essay
 tags:
@@ -8,5 +8,3 @@ tags:
   - packing
 legacyUrl: "/posts/on-carrying-less.html"
 ---
-
-Notes on minimal packing and why I ditched the third lens.

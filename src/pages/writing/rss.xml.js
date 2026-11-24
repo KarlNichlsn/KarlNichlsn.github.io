@@ -16,7 +16,7 @@ export async function GET(context) {
 
   return rss({
     title: `${SITE.name} — Writing`,
-    description: 'Essays and travel writing by Karl Nicholson.',
+    description: SITE.description,
     site: context.site,
     items,
   });

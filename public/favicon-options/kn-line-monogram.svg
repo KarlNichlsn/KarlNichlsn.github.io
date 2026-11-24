@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">KN line monogram</title>
+  <rect width="64" height="64" rx="8" fill="#f1eadf"/>
+  <g fill="none" stroke-linecap="square" stroke-linejoin="miter" stroke-width="4">
+    <path d="M12 10v44M12 34l17-24M12 34l18 20" stroke="#8f4937"/>
+    <path d="M36 54V10l17 44V10" stroke="#201c18"/>
+  </g>
+</svg>

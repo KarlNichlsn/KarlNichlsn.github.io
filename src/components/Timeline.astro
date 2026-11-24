@@ -1,10 +1,16 @@
 ---
-import { timelineNewestFirst, type TimelineEvent } from '../data/timeline';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const categoryLabel: Record<TimelineEvent['category'], string> = {
-  academic: 'Academic / professional',
-  other: 'Other pursuits',
-};
+type TimelineData = CollectionEntry<'timeline'>['data'];
+
+const timelineNewestFirst = (await getCollection('timeline')).sort((a, b) =>
+  b.data.start.localeCompare(a.data.start),
+);
+
+const formatCategory = (value: string) =>
+  value
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
 
 const formatDate = (value: string) => {
   const [year, month] = value.split('-');
@@ -14,32 +20,35 @@ const formatDate = (value: string) => {
   );
 };
 
-const formatPeriod = (event: TimelineEvent) => {
+const formatPeriod = (event: TimelineData) => {
   const start = formatDate(event.start);
   const end = event.end ? formatDate(event.end) : 'Present';
   return start === end ? start : `${start}–${end}`;
 };
 ---
 
-<div class="timeline-key" aria-hidden="true">
-  <span>Academic / professional</span>
-  <span>Other pursuits</span>
-</div>
+<svg class="timeline__mobile-transition" viewBox="0 0 100 112" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 50 0 C 50 52 0 74 0 112"></path>
+</svg>
 
 <ol class="timeline" aria-label="Life timeline">
-  {timelineNewestFirst.map((event) => (
-    <li class:list={['timeline__event', `timeline__event--${event.category}`]}>
+  {timelineNewestFirst.map(({ id, data }) => (
+    <li class:list={[
+      'timeline__event',
+      `timeline__event--${data.side}`,
+      { 'timeline__event--mobile-hidden': !data.showOnMobile },
+    ]}>
       <span class="timeline__marker" aria-hidden="true"></span>
-      <article class="timeline-card" id={event.id}>
+      <article class="timeline-card" id={id}>
         <p class="timeline-card__meta">
-          <span class="timeline-card__category">{categoryLabel[event.category]}</span>
-          <span>{formatPeriod(event)}</span>
+          <span class="timeline-card__category">{formatCategory(data.category)}</span>
+          <span>{formatPeriod(data)}</span>
         </p>
         <h3>
-          {event.href ? <a href={event.href}>{event.title}</a> : event.title}
+          {data.href ? <a href={data.href}>{data.title}</a> : data.title}
         </h3>
-        {event.organisation && <p class="timeline-card__organisation">{event.organisation}</p>}
-        <p>{event.summary}</p>
+        {data.organisation && <p class="timeline-card__organisation">{data.organisation}</p>}
+        <p>{data.summary}</p>
       </article>
     </li>
   ))}

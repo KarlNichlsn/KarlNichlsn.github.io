@@ -9,4 +9,4 @@ tags:
 legacyUrl: "/posts/hello-world.html"
 ---
 
-First post on the new site. Replace this content with your real post.
+Site under construction.

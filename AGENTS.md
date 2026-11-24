@@ -369,40 +369,48 @@ Do not determine left/right placement from hard-coded IDs.
 
 The current timeline content may be migrated from existing JSON or other data, but the new schema should explicitly describe category.
 
-Prefer structured data such as:
+Prefer Markdown entries validated as an Astro content collection:
 
 ```text
-src/
-  data/
-    timeline.ts
+src/content/timeline/
+  example-event.md
 ```
-
-or an equivalent Astro content collection.
 
 Each event should support useful fields such as:
 
-```ts
-{
-  date: "2025",
-  title: "Example event",
-  category: "academic",
-  summary: "Short description",
-  href: "/projects/example/",
-  image: "/images/example.webp",
-  tags: ["Research"]
-}
+```yaml
+---
+title: Example event
+start: "2025"
+side: academic
+category: professional
+showOnMobile: true
+summary: Short description
+href: /projects/example/
+tags:
+  - Research
+---
 ```
 
-Initial category values should be:
+Initial `side` values should be:
 
 ```text
 academic
 other
 ```
 
-Only introduce additional categories if there is a real content need.
+The `category` field is the visible editorial label and may use values such as:
 
-The category determines timeline placement.
+```text
+academic
+professional
+sporting
+outreach
+engineering
+community
+```
+
+The `side` field determines timeline placement. The `category` field must not be used to infer placement.
 
 ---
 
@@ -1106,13 +1114,11 @@ src/
 │       └── MapPin.astro
 │
 ├── content/
+│   ├── timeline/
 │   ├── writing/
 │   │   ├── essays/
 │   │   └── travel/
 │   └── projects/
-│
-├── data/
-│   └── timeline.ts
 │
 ├── layouts/
 │   ├── BaseLayout.astro
@@ -1176,6 +1182,115 @@ Avoid:
 - constant movement
 - huge technology-logo sections
 - repetitive generic cards
+
+---
+
+# Selected Visual Direction
+
+The approved visual direction combines the structure of **The Scientific Review** with the warmer character of **The Cartographic Field Journal**.
+
+Treat the following as the visual source of truth unless Karl explicitly changes it.
+
+## Design Character
+
+- contemporary scientific and editorial publication
+- warm, personal and quietly authoritative
+- generous composition with precise rules and restrained interaction
+- minimal card chrome; organise content through typography, spacing and hairlines
+- hero and timeline should share a continuous line or contour language
+- use the terracotta convergence mark in `public/favicon-options/convergence-terracotta.svg` as the site favicon
+
+## Typography
+
+- headings and display text: **Bitter**, using its restrained slab-serif forms for a subtle typewritten character without becoming monospaced or distressed
+- body, navigation and metadata: **Public Sans**
+- use only these two families unless a specialised code face is genuinely needed in article content
+- long-form writing should remain comfortably narrow with generous line height
+
+## Day Palette
+
+```text
+Page background:     #F1EADF
+Main surface:        #F8F3E9
+Subtle surface:      #E8DED2
+Primary text:        #201C18
+Secondary text:      #62594F
+Terracotta accent:   #8F4937
+Strong accent:       #7C3E30
+Borders and rules:   #CFC2B3
+Hero/timeline lines: #A78270
+Text on accent:      #FFF8EF
+```
+
+## Night Palette
+
+Night mode should resemble dark paper and warm ink rather than a generic pure-black developer theme.
+
+```text
+Page background:     #1B1815
+Main surface:        #25211D
+Subtle surface:      #2E2924
+Primary text:        #F1E9DD
+Secondary text:      #B9AC9D
+Terracotta accent:   #D98F73
+Strong accent:       #E7A083
+Borders and rules:   #50463D
+Hero/timeline lines: #8B6254
+Text on accent:      #1B1815
+```
+
+## Theme Behaviour
+
+- theme changes must be controlled by an explicit button only
+- do **not** read or follow the operating system colour-scheme preference
+- first visits start in day mode
+- remember only a visitor's explicit button selection in local storage
+- prevent a flash of the incorrect theme during navigation or reload
+- the toggle should use a compact animated sun-to-moon transition inspired by the selected 21st.dev animated theme toggle
+- implement the interaction with an accessible native button, SVG and CSS when practical; do not introduce React or Framer Motion solely for this control
+- give the button a clear changing accessible name such as `Switch to night mode` and `Switch to day mode`
+
+## Navigation
+
+- use a thin publication-style masthead
+- place the Karl Nicholson wordmark on the left and primary sections on the right
+- use rules, typography and an understated active state instead of floating navigation chrome
+- place the theme button alongside the primary navigation controls
+- retain the visible primary links through tablet and normal laptop widths; use the compact menu only when the links no longer fit comfortably
+- when the compact menu is used, render its opaque panel directly below the masthead with accessible touch targets and no overlap with the header content
+
+## Hero
+
+- use 47 individually indexed, fine organic vertical contours in terracotta and muted graphite tones across the full width of the landing composition
+- use smooth curved geometry throughout the convergence; do not join the contours with visibly straight or angular segments
+- place the name and introduction above the field as foreground content; use a transparent, steeply fading background-colour wash for legibility rather than a conventional card
+- begin the name and introduction nearer the top of the landing page instead of vertically centring them
+- bring the separate vertical contours together toward the bottom of the landing and resolve them into one central spine
+- carry that central spine directly into the timeline without an intervening current-focus section, timeline introduction or horizontal rule
+- pointer movement should deform the field locally and gently
+- the composition must remain attractive when static and on touch devices
+- the visual should be subordinate to the introduction and should conceptually resolve into the timeline spine
+- show the understated note `This site is best viewed on desktop` on mobile only
+- do not use neon effects, cursor followers, large gradients or technology-demo styling
+
+## Timeline
+
+- retain a precise central chronological hairline on larger screens
+- events with `side: academic` appear on the left; events with `side: other` appear on the right
+- render the card's visible category from its Markdown `category` field, independent of placement
+- begin the first timeline event immediately after the hero so its central line is visually continuous with the converged hero field
+- use editorial event notes, dates and fine connectors rather than rounded cards
+- use terracotta for meaningful emphasis and interactive states
+- collapse to one clear line on mobile while retaining visible category labels
+- give every timeline event an explicit `showOnMobile` boolean so the mobile timeline can present a deliberately curated subset without deleting desktop content
+
+## Articles and Supporting Pages
+
+- prefer publication-like page openings, decks, rules, captions and readable text measures
+- group the Writing landing page under the labels **Musings** and **Gach áit eile**, without a separate visible page header
+- travel writing may use coordinates and cartographic line details sparingly
+- avoid excessive cards, pills, rounded containers, shadows and decorative UI chrome
+- all pages must use the same day/night design tokens so the visual identity remains coherent
 
 ---
 

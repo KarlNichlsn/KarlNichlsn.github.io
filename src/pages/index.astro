@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import AtmosphericHero from '../components/AtmosphericHero.astro';
 import Timeline from '../components/Timeline.astro';
 import WritingList from '../components/WritingList.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -18,58 +19,25 @@ const writing = [
 ---
 
 <BaseLayout>
-  <section class="hero" aria-labelledby="home-title">
-    <div class="hero__copy">
-      <p class="eyebrow">Physics · Data-intensive science · Writing</p>
-      <h1 id="home-title">Karl Nicholson</h1>
-      <p class="hero__introduction">
-        I work across physics, machine learning and scientific computing, with an interest in how
-        technical ideas become useful research, systems and stories.
-      </p>
-      <div class="hero__links">
-        <a class="button-link" href="/about/">About me</a>
-        <a class="button-link" href="/cv/">View CV</a>
+  <div class="landing">
+    <AtmosphericHero />
+
+    <section class="hero" aria-labelledby="home-title">
+      <div class="hero__copy">
+        <p class="eyebrow">Physics · Data-intensive science · Writing</p>
+        <h1 id="home-title">Karl Nicholson</h1>
+        <p class="hero__introduction">Welcome! My name is Karl and I studied Physics &amp; Astrophysics @ Trinity College Dublin. Have a look around my site to see some of the things I've done.</p>
+        <div class="hero__links">
+          <a class="button-link" href="/about/">About me</a>
+          <a class="button-link" href="/cv/">View CV</a>
+        </div>
+        <p class="hero__desktop-note">This site is best viewed on desktop</p>
       </div>
-    </div>
+    </section>
+  </div>
 
-    <!-- Static visual foundation only. The final interactive hero will replace this in a later pass. -->
-    <div class="hero__foundation" aria-hidden="true"></div>
-  </section>
-
-  <section class="section section--surface" aria-labelledby="focus-title">
+  <section class="section section--timeline" aria-label="Life timeline">
     <div class="section-inner">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Current focus</p>
-          <h2 id="focus-title">From physical systems to data-intensive questions.</h2>
-        </div>
-        <div>
-          <p>
-            My background spans physics and astrophysics, scientific research, autonomous systems,
-            applied AI and teaching. I am currently studying Data Intensive Science at the University
-            of Cambridge.
-          </p>
-          <a class="text-link" href="/about/">Read the longer biography →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="timeline-title">
-    <div class="section-inner">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Timeline</p>
-          <h2 id="timeline-title">A life branching outward.</h2>
-        </div>
-        <div>
-          <p>
-            Academic and professional work sits alongside the interests, communities and activities
-            that shaped it. This first implementation prioritises chronology and readable content;
-            motion will be refined later.
-          </p>
-        </div>
-      </div>
       <Timeline />
     </div>
   </section>
@@ -82,7 +50,7 @@ const writing = [
           <h2 id="projects-title">Research and engineering in context.</h2>
         </div>
         <div>
-          <p>A small selection of work across astrophysics, autonomous systems and radio astronomy.</p>
+          <p>Site under construction.</p>
         </div>
       </div>
 
@@ -111,7 +79,7 @@ const writing = [
           <h2 id="writing-title">Essays, field notes and travel.</h2>
         </div>
         <div>
-          <p>Repository-published writing, organised as essays and geographically structured travel notes.</p>
+          <p>Site under construction.</p>
         </div>
       </div>
       <WritingList entries={writing} compact />

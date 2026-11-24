@@ -1,6 +1,6 @@
 ---
 title: "Hoi-An food"
-description: "Go to Chopsticks. Cao lầu."
+description: "go to chopsticks! CAO LAO!"
 date: 2024-04-14
 type: travel
 tags:
@@ -15,4 +15,4 @@ location:
   longitude: 108.3380
 ---
 
-Go to Chopsticks. Cao lầu.
+go to chopsticks! CAO LAO!

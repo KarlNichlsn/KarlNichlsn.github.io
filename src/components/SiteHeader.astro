@@ -1,5 +1,6 @@
 ---
 import { navigation } from '../data/site';
+import ThemeToggle from './ThemeToggle.astro';
 
 const pathname = Astro.url.pathname;
 const isCurrent = (href: string) =>
@@ -9,25 +10,11 @@ const isCurrent = (href: string) =>
 <header class="site-header">
   <div class="site-header__inner">
     <a class="wordmark" href="/" aria-label="Karl Nicholson, home">
-      <span aria-hidden="true">KN</span>
-      <span class="wordmark__name">Karl Nicholson</span>
+      <span>Karl Nicholson</span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <ul>
-        {navigation.map((item) => (
-          <li>
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-
-    <details class="mobile-nav">
-      <summary>Menu</summary>
-      <nav aria-label="Mobile navigation">
+    <div class="site-header__controls">
+      <nav class="desktop-nav" aria-label="Primary navigation">
         <ul>
           {navigation.map((item) => (
             <li>
@@ -38,6 +25,23 @@ const isCurrent = (href: string) =>
           ))}
         </ul>
       </nav>
-    </details>
+
+      <ThemeToggle />
+
+      <details class="mobile-nav">
+        <summary>Menu</summary>
+        <nav aria-label="Mobile navigation">
+          <ul>
+            {navigation.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>

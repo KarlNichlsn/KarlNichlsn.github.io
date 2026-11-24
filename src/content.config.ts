@@ -54,4 +54,21 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { essays, travel, projects };
+const timeline = defineCollection({
+  loader: glob({ base: './src/content/timeline', pattern: '**/*.md' }),
+  schema: z.object({
+    title: z.string(),
+    organisation: z.string().optional(),
+    start: z.string(),
+    end: z.string().optional(),
+    side: z.enum(['academic', 'other']),
+    category: z.string().min(1),
+    showOnMobile: z.boolean().default(true),
+    summary: z.string(),
+    href: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    legacyId: z.string().optional(),
+  }),
+});
+
+export const collections = { essays, travel, projects, timeline };

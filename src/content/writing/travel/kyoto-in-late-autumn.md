@@ -1,6 +1,6 @@
 ---
 title: "Kyoto in Late Autumn"
-description: "A quiet walk through temple gardens and streets after the rain."
+description: "Site under construction."
 date: 2024-11-18
 type: travel
 tags:
@@ -14,5 +14,3 @@ location:
   longitude: 135.7681
 legacyUrl: "/posts/kyoto-in-late-autumn.html"
 ---
-
-A quiet walk through temple gardens and streets after the rain.

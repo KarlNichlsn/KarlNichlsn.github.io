@@ -1,8 +1,7 @@
 export const SITE = {
   name: 'Karl Nicholson',
   title: 'Karl Nicholson — Physics, data-intensive science and writing',
-  description:
-    'The personal site of Karl Nicholson: physics, data-intensive science, selected projects, essays and travel writing.',
+  description: 'Site under construction.',
   url: 'https://karlnicholson.net',
   email: 'kn457@cam.ac.uk',
   links: {
