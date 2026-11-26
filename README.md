@@ -1,9 +1,3 @@
-# Karl Nicholson — personal site
-
-This repository contains the Astro source for [karlnicholson.net](https://karlnicholson.net).
-
-## Local development
-
 ```bash
 npm install
 npm run dev
