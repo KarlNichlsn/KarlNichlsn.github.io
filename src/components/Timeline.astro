@@ -1,0 +1,55 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+type TimelineData = CollectionEntry<'timeline'>['data'];
+
+const timelineNewestFirst = (await getCollection('timeline')).sort((a, b) =>
+  b.data.start.localeCompare(a.data.start),
+);
+
+const formatCategory = (value: string) =>
+  value
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+const formatDate = (value: string) => {
+  const [year, month] = value.split('-');
+  if (!month) return year;
+  return new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric' }).format(
+    new Date(Number(year), Number(month) - 1, 1),
+  );
+};
+
+const formatPeriod = (event: TimelineData) => {
+  const start = formatDate(event.start);
+  const end = event.end ? formatDate(event.end) : 'Present';
+  return start === end ? start : `${start}–${end}`;
+};
+---
+
+<svg class="timeline__mobile-transition" viewBox="0 0 100 112" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 50 0 C 50 52 0 74 0 112"></path>
+</svg>
+
+<ol class="timeline" aria-label="Life timeline">
+  {timelineNewestFirst.map(({ id, data }) => (
+    <li class:list={[
+      'timeline__event',
+      `timeline__event--${data.side}`,
+      { 'timeline__event--mobile-hidden': !data.showOnMobile },
+    ]}>
+      <span class="timeline__marker" aria-hidden="true"></span>
+      <article class="timeline-card" id={id}>
+        <p class="timeline-card__meta">
+          <span class="timeline-card__category">{formatCategory(data.category)}</span>
+          <span>{formatPeriod(data)}</span>
+        </p>
+        <h3>
+          {data.href ? <a href={data.href}>{data.title}</a> : data.title}
+        </h3>
+        {data.organisation && <p class="timeline-card__organisation">{data.organisation}</p>}
+        <p>{data.summary}</p>
+      </article>
+    </li>
+  ))}
+</ol>

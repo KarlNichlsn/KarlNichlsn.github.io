@@ -1,0 +1,22 @@
+---
+import { SITE } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <a class="footer-email" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    </div>
+
+    <nav aria-label="External links">
+      <a href={SITE.links.linkedin} rel="me noopener" target="_blank">LinkedIn</a>
+      <a href={SITE.links.github} rel="me noopener" target="_blank">GitHub</a>
+      <a href="/writing/rss.xml">RSS</a>
+    </nav>
+
+    <p class="site-footer__meta">© {year} Karl Nicholson</p>
+  </div>
+</footer>

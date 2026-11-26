@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Terracotta convergence mark</title>
+  <rect width="64" height="64" rx="8" fill="#f1eadf"/>
+  <g fill="none" stroke="#8f4937" stroke-width="2.4" stroke-linecap="round">
+    <path d="M8 8v11c0 10 17 12 24 22"/>
+    <path d="M20 8v14c0 9 8 11 12 19"/>
+    <path d="M32 8v33"/>
+    <path d="M44 8v14c0 9-8 11-12 19"/>
+    <path d="M56 8v11c0 10-17 12-24 22"/>
+    <path d="M32 41v15"/>
+  </g>
+</svg>

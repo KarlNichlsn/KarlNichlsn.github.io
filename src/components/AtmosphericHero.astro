@@ -1,0 +1,155 @@
+---
+const width = 1440;
+const height = 780;
+const mergeStart = 430;
+const mergeEnd = 625;
+const lineCount = 47;
+const lines = Array.from({ length: lineCount }, (_, index) => ({
+  index,
+  x: 24 + index * ((width - 48) / (lineCount - 1)),
+}));
+
+type Point = { x: number; y: number };
+
+const smoothPath = (points: Point[]) =>
+  points.reduce((path, point, index) => {
+    if (index === 0) return `M ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
+
+    const previousPrevious = points[index - 2] ?? points[index - 1];
+    const previous = points[index - 1];
+    const next = points[index + 1] ?? point;
+    const controlOne = {
+      x: previous.x + (point.x - previousPrevious.x) / 6,
+      y: previous.y + (point.y - previousPrevious.y) / 6,
+    };
+    const controlTwo = index === points.length - 1
+      ? { x: point.x, y: point.y - (point.y - previous.y) / 3 }
+      : {
+          x: point.x - (next.x - previous.x) / 6,
+          y: point.y - (next.y - previous.y) / 6,
+        };
+
+    return `${path} C ${controlOne.x.toFixed(2)} ${controlOne.y.toFixed(2)} ${controlTwo.x.toFixed(2)} ${controlTwo.y.toFixed(2)} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
+  }, '');
+
+const staticPath = (x: number, index: number) => {
+  const points = Array.from({ length: 25 }, (_, pointIndex) => {
+    const y = pointIndex * (mergeEnd / 24);
+    const progress = Math.max(0, Math.min(1, (y - mergeStart) / (mergeEnd - mergeStart)));
+    const eased = progress * progress * (3 - 2 * progress);
+    const wave = (Math.sin(y * 0.018 + index * 0.58) * 6 + Math.sin(y * 0.006 + index * 0.83) * 4) * (1 - eased);
+    const lineX = x + (width / 2 - x) * eased + wave;
+    return { x: lineX, y };
+  });
+  return smoothPath(points);
+};
+---
+
+<div class="atmospheric-hero" data-atmospheric-hero aria-hidden="true">
+  <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
+    <g class="atmospheric-hero__lines">
+      {lines.map(({ x, index }) => (
+        <path d={staticPath(x, index)} data-field-line data-x={x} data-index={index}></path>
+      ))}
+    </g>
+    <path class="atmospheric-hero__spine" d={`M ${width / 2} ${mergeEnd} L ${width / 2} ${height}`}></path>
+  </svg>
+</div>
+
+<script>
+  const initialiseAtmosphericHeroes = () => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+    document.querySelectorAll<HTMLElement>('[data-atmospheric-hero]').forEach((field) => {
+      if (field.dataset.heroReady === 'true' || reducedMotion || !finePointer) return;
+      field.dataset.heroReady = 'true';
+
+      const interactionSurface = field.closest<HTMLElement>('.landing') ?? field;
+      const paths = [...field.querySelectorAll<SVGPathElement>('[data-field-line]')];
+      const viewWidth = 1440;
+      const viewHeight = 780;
+      const mergeStart = 430;
+      const mergeEnd = 625;
+      const target = { x: viewWidth / 2, y: viewHeight / 2, strength: 0 };
+      const current = { ...target };
+      let frame = 0;
+
+      const smoothPath = (points: Array<{ x: number; y: number }>) =>
+        points.reduce((path, point, index) => {
+          if (index === 0) return `M ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
+
+          const previousPrevious = points[index - 2] ?? points[index - 1];
+          const previous = points[index - 1];
+          const next = points[index + 1] ?? point;
+          const controlOne = {
+            x: previous.x + (point.x - previousPrevious.x) / 6,
+            y: previous.y + (point.y - previousPrevious.y) / 6,
+          };
+          const controlTwo = index === points.length - 1
+            ? { x: point.x, y: point.y - (point.y - previous.y) / 3 }
+            : {
+                x: point.x - (next.x - previous.x) / 6,
+                y: point.y - (next.y - previous.y) / 6,
+              };
+
+          return `${path} C ${controlOne.x.toFixed(2)} ${controlOne.y.toFixed(2)} ${controlTwo.x.toFixed(2)} ${controlTwo.y.toFixed(2)} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
+        }, '');
+
+      const draw = () => {
+        current.x += (target.x - current.x) * 0.12;
+        current.y += (target.y - current.y) * 0.12;
+        current.strength += (target.strength - current.strength) * 0.1;
+
+        paths.forEach((path) => {
+          const baseX = Number(path.dataset.x);
+          const index = Number(path.dataset.index);
+          const points: Array<{ x: number; y: number }> = [];
+
+          for (let pointIndex = 0; pointIndex <= 24; pointIndex += 1) {
+            const y = pointIndex * (mergeEnd / 24);
+            const progress = Math.max(0, Math.min(1, (y - mergeStart) / (mergeEnd - mergeStart)));
+            const eased = progress * progress * (3 - 2 * progress);
+            const wave = (Math.sin(y * 0.018 + index * 0.58) * 6 + Math.sin(y * 0.006 + index * 0.83) * 4) * (1 - eased);
+            const restingX = baseX + (viewWidth / 2 - baseX) * eased + wave;
+            const distanceX = (restingX - current.x) / 235;
+            const distanceY = (y - current.y) / 170;
+            const influence = Math.exp(-0.5 * (distanceX * distanceX + distanceY * distanceY));
+            const displacement = (current.x - restingX) * 0.16 * influence * current.strength * (1 - eased);
+            const x = restingX + displacement;
+            points.push({ x, y });
+          }
+
+          path.setAttribute('d', smoothPath(points));
+        });
+
+        const stillMoving =
+          Math.abs(target.x - current.x) > 0.2 ||
+          Math.abs(target.y - current.y) > 0.2 ||
+          Math.abs(target.strength - current.strength) > 0.005;
+
+        frame = stillMoving ? requestAnimationFrame(draw) : 0;
+      };
+
+      const requestDraw = () => {
+        if (!frame) frame = requestAnimationFrame(draw);
+      };
+
+      interactionSurface.addEventListener('pointermove', (event) => {
+        const bounds = field.getBoundingClientRect();
+        target.x = ((event.clientX - bounds.left) / bounds.width) * viewWidth;
+        target.y = ((event.clientY - bounds.top) / bounds.height) * viewHeight;
+        target.strength = 1;
+        requestDraw();
+      });
+
+      interactionSurface.addEventListener('pointerleave', () => {
+        target.strength = 0;
+        requestDraw();
+      });
+    });
+  };
+
+  initialiseAtmosphericHeroes();
+  document.addEventListener('astro:after-swap', initialiseAtmosphericHeroes);
+</script>

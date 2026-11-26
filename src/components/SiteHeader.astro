@@ -1,0 +1,47 @@
+---
+import { navigation } from '../data/site';
+import ThemeToggle from './ThemeToggle.astro';
+
+const pathname = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="wordmark" href="/" aria-label="Karl Nicholson, home">
+      <span>Karl Nicholson</span>
+    </a>
+
+    <div class="site-header__controls">
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <ul>
+          {navigation.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <ThemeToggle />
+
+      <details class="mobile-nav">
+        <summary>Menu</summary>
+        <nav aria-label="Mobile navigation">
+          <ul>
+            {navigation.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

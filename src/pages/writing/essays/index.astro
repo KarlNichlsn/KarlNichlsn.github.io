@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import PageHeader from '../../../components/PageHeader.astro';
+import WritingList from '../../../components/WritingList.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const essays = (await getCollection('essays')).filter((entry) => !entry.data.draft).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Essays — Karl Nicholson" description="Site under construction.">
+  <div class="page-shell">
+    <PageHeader eyebrow="Writing" title="Essays / Articles" introduction="Site under construction." />
+    <WritingList entries={essays} />
+  </div>
+</BaseLayout>

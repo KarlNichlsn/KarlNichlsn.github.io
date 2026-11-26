@@ -1,0 +1,55 @@
+---
+import PageHeader from '../components/PageHeader.astro';
+import { education, experience, type CvEntry } from '../data/cv';
+import { SITE } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface SectionProps {
+  title: string;
+  entries: CvEntry[];
+}
+
+const sections: SectionProps[] = [
+  { title: 'Education and research', entries: education },
+  { title: 'Experience', entries: experience },
+];
+---
+
+<BaseLayout title="CV — Karl Nicholson" description="Site under construction.">
+  <div class="page-shell">
+    <PageHeader
+      eyebrow="Curriculum vitae"
+      title="Research, engineering and education."
+      introduction="Site under construction."
+    />
+
+    <div class="cv-intro">
+      <a class="button-link" href="/assets/CV.pdf" target="_blank" rel="noopener">Download PDF CV</a>
+      <a class="button-link" href={`mailto:${SITE.email}`}>Email Karl</a>
+    </div>
+
+    {sections.map((section) => {
+      const headingId = `cv-${section.title.toLowerCase().replaceAll(' ', '-')}`;
+      return (
+        <section class="cv-section" aria-labelledby={headingId}>
+          <h2 id={headingId}>{section.title}</h2>
+          <ol class="cv-list">
+            {section.entries.map((entry) => (
+              <li class="cv-entry" id={entry.id}>
+                <div>
+                  <p class="cv-entry__period">{entry.period}{entry.location && <><br />{entry.location}</>}</p>
+                </div>
+                <div>
+                  <h3>{entry.title}</h3>
+                  <p class="cv-entry__organisation">{entry.organisation}</p>
+                  {entry.summary && <p>{entry.summary}</p>}
+                  <ul>{entry.details.map((detail) => <li>{detail}</li>)}</ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      );
+    })}
+  </div>
+</BaseLayout>

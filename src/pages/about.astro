@@ -1,0 +1,27 @@
+---
+import PageHeader from '../components/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About — Karl Nicholson"
+  description="Site under construction."
+>
+  <div class="page-shell">
+    <PageHeader
+      eyebrow="About"
+      title="Curiosity, carried between disciplines."
+      introduction="Site under construction."
+    />
+
+    <div class="about-grid">
+      <div class="narrative-copy">
+        <p><a class="text-link" href="/cv/">Read the full CV →</a></p>
+      </div>
+
+      <figure class="about-portrait">
+        <img src="/assets/Headshot_1.jpeg" width="200" height="200" alt="Karl Nicholson" loading="eager" />
+      </figure>
+    </div>
+  </div>
+</BaseLayout>
